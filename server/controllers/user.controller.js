@@ -9,12 +9,16 @@ router.post('/signup', async (req, res) => {
 	expireTime = '1 hour';
 
 	try {
+		
 		const user = new User({
 			username: req.body.username,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 10)
 		});
 
+		const isUsers = await User.findOne();
+		if (!isUsers) user.isAdmin = true;
+		
 		const newUser = await user.save();
 
 		const token = jwt.sign({ id: newUser._id }, process.env.JWT, { expiresIn: expireTime } );
