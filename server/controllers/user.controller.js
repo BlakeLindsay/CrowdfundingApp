@@ -3,10 +3,14 @@ const router = require('express').Router();
 const User = require('../models/user.model.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validateSession = require('../middleware/validateSession');
 
+expireTime = '1 hour';
 
+/**
+ * the first user created is made admin
+ */
 router.post('/signup', async (req, res) => {
-	expireTime = '1 hour';
 
 	try {
 		
@@ -56,6 +60,36 @@ router.post('/login', async function(req, res) {
 			message: 'Successful Login!',
 			token
 		});
+
+	} catch (error) {
+		res.status(500).json({
+			ERROR: error.message
+		});
+	}
+});
+
+/**
+ * regular users can only delete themselves, admins can delete any user
+ */
+router.delete('/delete/:id', validateSession, async function(req, res) {
+	try {
+		const { id: id } = req.params;
+		const userId = req.user._id;
+
+		const user = await User.findById(userId);
+
+		if (userId == id || user.isAdmin) {
+
+			const deletedUser = await User.findByIdAndDelete(id);
+
+			res.status(200).json({
+				deletedUser,
+				message: 'successfully deleted user'
+			});
+
+		} else {
+			throw new Error('not admin');
+		}
 
 	} catch (error) {
 		res.status(500).json({
