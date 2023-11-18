@@ -11,9 +11,7 @@ expireTime = '1 hour';
  * the first user created is made admin
  */
 router.post('/signup', async (req, res) => {
-
 	try {
-		
 		const user = new User({
 			username: req.body.username,
 			email: req.body.email,
@@ -85,6 +83,36 @@ router.delete('/delete/:id', validateSession, async function(req, res) {
 			res.status(200).json({
 				deletedUser,
 				message: 'successfully deleted user'
+			});
+
+		} else {
+			throw new Error('not admin');
+		}
+
+	} catch (error) {
+		res.status(500).json({
+			ERROR: error.message
+		});
+	}
+});
+
+/**
+ * 
+ */
+router.patch('/admin/promote/:id', validateSession, async function(req, res) {
+	try {
+		const { id: id } = req.params;
+		const userId = req.user._id;
+
+		const user = await User.findById(userId);
+
+		if (user.isAdmin) {
+
+			const promotedUser = await User.findByIdAndUpdate(id, {isAdmin: true}, {new: true});
+
+			res.status(200).json({
+				promotedUser: promotedUser,
+				message: 'successfully promoted user'
 			});
 
 		} else {
