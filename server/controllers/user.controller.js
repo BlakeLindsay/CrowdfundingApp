@@ -97,6 +97,41 @@ router.delete('/delete/:id', validateSession, async function(req, res) {
 });
 
 /**
+ * admins can directly add users with specific settings (including isAdmin)
+ */
+router.post('/add', validateSession, async function(req, res) {
+	try {
+		const userId = req.user._id;
+
+		const user = await User.findById(userId);
+
+		if (user.isAdmin) {
+			const newUser = new User({
+				username: req.body.username,
+				email: req.body.email,
+				password: bcrypt.hashSync(req.body.password, 10),
+				isAdmin: req.body.isAdmin
+			});
+
+			const addedUser = await newUser.save();
+
+			res.status(200).json({
+				addedUser,
+				message: 'successfully added user'
+			});
+
+		} else {
+			throw new Error('not admin');
+		}
+
+	} catch (error) {
+		res.status(500).json({
+			ERROR: error.message
+		});
+	}
+});
+
+/**
  * admins can promote other users to admins
  */
 router.patch('/admin/promote/:id', validateSession, async function(req, res) {
