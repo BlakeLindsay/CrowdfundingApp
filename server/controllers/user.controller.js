@@ -161,4 +161,38 @@ router.patch('/admin/promote/:id', validateSession, async function(req, res) {
 	}
 });
 
+/**
+ * admins can change permissions of other users
+ */
+router.patch('/permissions/:id', validateSession, async function(req, res) {
+	try {
+		const { id: id } = req.params;
+		const userId = req.user._id;
+
+		const user = await User.findById(userId);
+
+		if (user.isAdmin) {
+			const newPerms = {
+				isAdmin: req.body.isAdmin,
+				canMakeCampaign: req.body.canMakeCampaign
+			}
+
+			const editedUser = await User.findByIdAndUpdate(id, newPerms, {new: true});
+
+			res.status(200).json({
+				editedUser: editedUser,
+				message: 'successfully edited user'
+			});
+
+		} else {
+			throw new Error('not admin');
+		}
+
+	} catch (error) {
+		res.status(500).json({
+			ERROR: error.message
+		});
+	}
+});
+
 module.exports = router;
