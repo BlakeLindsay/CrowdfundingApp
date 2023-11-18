@@ -97,7 +97,7 @@ router.delete('/delete/:id', validateSession, async function(req, res) {
 });
 
 /**
- * 
+ * admins can promote other users to admins
  */
 router.patch('/admin/promote/:id', validateSession, async function(req, res) {
 	try {
