@@ -50,7 +50,7 @@ import { useNavigate } from "react-router-dom";
             <input
                 placeholder="Email"
                 className="bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-                type="text" 
+                type="email" 
                 onChange={(e) => setEmail(e.target.value)}/>
               <input
                 placeholder="Password"
