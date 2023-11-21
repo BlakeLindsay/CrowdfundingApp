@@ -35,7 +35,7 @@ function Navbar() {
             <div>
               <ul className={`p-2 ${isMenuHidden ? "hidden" : ""}`} id="menu">
                 <li className="text-cyan-900 font-bold md:hidden">
-                  <a href="#" className="px-2 flex justify-end">
+                  <a href="/signup" className="px-2 flex justify-end">
                     <span>Signup </span>
                     <svg
                       className="w-6 ml-1 h-6"
@@ -56,7 +56,7 @@ function Navbar() {
 
                 <li className="text-cyan-900 font-bold md:hidden">
                   <a
-                    href="#"
+                    href="/login"
                     className="px-2 pt-1 flex justify-end border-r-2 border-teal-50"
                   >
                     <span>Login </span>
@@ -81,14 +81,14 @@ function Navbar() {
             <div>
               <ul className="flex justify-center space-x-4">
                 <li>
-                  <a href="#">
+                  <a href="/signup">
                     <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">
                       Signup
                     </span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="/login">
                     <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block  hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">
                       Login
                     </span>
