@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./nav.css";
-import fundrise from "./FundRise.svg";
+import fundrise from "../../assets/FundRise.svg"
 
 function Navbar() {
   const [isMenuHidden, setMenuHidden] = useState(true);
