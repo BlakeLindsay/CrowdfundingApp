@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 const { PORT, MONGO } = process.env;
 
-mongoose.connect(`${MONGO}/Chat_Server`);
+mongoose.connect(`${MONGO}CrowdfundingApp`);
 
 const db = mongoose.connection;
 
