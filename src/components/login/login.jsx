@@ -10,10 +10,11 @@ import { useNavigate } from "react-router-dom";
       e.preventDefault();
   
       try {
+				
         const response = await fetch("http://localhost:3000/user/login", {
-          headers: {
+          headers: new Headers({
             "Content-Type": "application/json",
-          },
+          }),
           method: "POST",
           body: JSON.stringify({
             email,
