@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -41,7 +41,7 @@ function Signup(props) {
         console.log("Signup failed");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error during signup:", error);
     }
   }
 
@@ -61,7 +61,7 @@ function Signup(props) {
             <input
                 placeholder="Email"
                 className="bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-                type="text" 
+                type="email" 
                 onChange={(e) => setEmail(e.target.value)}/>
               <input
                 placeholder="Password"
