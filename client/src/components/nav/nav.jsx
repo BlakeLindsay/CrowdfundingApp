@@ -14,13 +14,11 @@ function Navbar() {
       <div className="bg-teal-50 pb-3">
         <div className="flex justify-between items-center">
           <img className="w-60 p-2 pl-3 md:w-80" src={fundrise} alt="logo" />
-          <div
-            className="px-4 cursor-pointer flex justify-end "
-          >
-            <svg 
+          <div className="px-4 cursor-pointer flex justify-end ">
+            <svg
               id="burger"
               onClick={handleBurgerClick}
-              className="w-6 text-cyan-900 md:hidden items-center"
+              className="w-6 text-cyan-900 md:hidden items-center title-svg"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -80,16 +78,20 @@ function Navbar() {
                 </li>
               </ul>
             </div>
-            <div >
+            <div>
               <ul className="flex justify-center space-x-4">
                 <li>
                   <a href="#">
-                  <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">Signup</span>
+                    <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">
+                      Signup
+                    </span>
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block  hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">Login</span>
+                    <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 hidden md:block  hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">
+                      Login
+                    </span>
                   </a>
                 </li>
               </ul>
