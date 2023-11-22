@@ -8,7 +8,7 @@ function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  const signupRoute = "http://127.0.0.1:4000/user/signup";
+  const signupRoute = "http://localhost:4000/user/signup";
 
   async function displayInputFields(e) {
     e.preventDefault();
@@ -18,15 +18,16 @@ function Signup(props) {
     console.log(password);
 
     try {
-      let response = await fetch(signupRoute, {
+			console.log('tried');
+      const response = await fetch(signupRoute, {
         headers: new Headers({
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         }),
         method: "POST",
         body: JSON.stringify({
-          userName: userName,
-          email: email,
-          password: password,
+          userName,
+          email,
+          password,
         }),
       });
 
