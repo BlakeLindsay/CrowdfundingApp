@@ -5,6 +5,8 @@ import Navbar from './components/nav/nav';
 import Signup from './components/signup/signup';
 import Login from './components/login/login';
 import Landing from './components/landing/landing';
+import CreateCampaign from './components/create_campaign/Create_Campaign';
+
 
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
       <Route path="/" element={<Landing setToken={updateToken} />} />
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
+      <Route path="/create" element={<CreateCampaign setoken={updateToken} />} />
       </Routes>
     </BrowserRouter>
   );
