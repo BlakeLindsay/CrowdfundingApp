@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,6 +9,8 @@ function Signup(props) {
   const [password, setPassword] = useState("");
 	const [imageFile, setImageFile] = useState();
 	const [imageURL, setImageURL] = useState();
+
+	useEffect(() => {submitImageFile(imageFile)}, [imageFile]);
   
   const signupRoute = "http://localhost:4000/user/signup";
 
@@ -77,24 +79,25 @@ function Signup(props) {
                 <a className='text-teal-200 hover:underline mt-4 px-1' href='/login'>Login</a></p>
           </form>
 					<input type="file" onChange={(e) => {
-						setImageFile(e.target.value);
-						console.log(imageFile);
+						console.log(e);
+						setImageFile(e.target.files[0]);
 						return;
 					}} />
-					<button onClick={submitImageFile}>submit imageFile</button>
-					<img src={`imgURL`} />
+					{/* <button onClick={submitImageFile}>submit imageFile</button> */}
+					<img src={`${imageURL}`} />
         </div>
       </div>
     </div>
   );
 
-	async function submitImageFile(e) {
-		const file = e.target.value;
+	async function submitImageFile(file) {
 		console.log(file);
 
-		const url = await fetch('http://localhost:4000/user/geturl').then(res => res.json());
+		// fetch to server to get link from s3
+		const {url} = await fetch('http://localhost:4000/user/geturl').then(res => res.json());
 		console.log(url);
 
+		// fetch to s3 to upload image
 		await fetch(url, {
 			method: "PUT",
 			headers: new Headers({
@@ -103,13 +106,12 @@ function Signup(props) {
 			body: file
 		});
 
-		console.log(url);
+		// fetch to our server to post link
+		const imgURL = url.split('?')[0];
 
-		// const imgURL = url.split('?')[0];
+		console.log(imgURL);
 
-		// console.log(imgURL);
-
-		setImageURL(url);
+		setImageURL(imgURL);
 	};
 }
 
