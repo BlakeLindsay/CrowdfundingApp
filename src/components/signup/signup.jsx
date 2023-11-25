@@ -7,6 +7,8 @@ function Signup(props) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+	const [imageFile, setImageFile] = useState();
+	const [imageURL, setImageURL] = useState();
   
   const signupRoute = "http://localhost:4000/user/signup";
 
@@ -74,10 +76,41 @@ function Signup(props) {
                 <p className='text-white mt-4 text-center'>Already have an account?
                 <a className='text-teal-200 hover:underline mt-4 px-1' href='/login'>Login</a></p>
           </form>
+					<input type="file" onChange={(e) => {
+						setImageFile(e.target.value);
+						console.log(imageFile);
+						return;
+					}} />
+					<button onClick={submitImageFile}>submit imageFile</button>
+					<img src={`imgURL`} />
         </div>
       </div>
     </div>
   );
+
+	async function submitImageFile(e) {
+		const file = e.target.value;
+		console.log(file);
+
+		const url = await fetch('http://localhost:4000/user/geturl').then(res => res.json());
+		console.log(url);
+
+		await fetch(url, {
+			method: "PUT",
+			headers: new Headers({
+				"Content-Type": "multipart/form-data"
+			}),
+			body: file
+		});
+
+		console.log(url);
+
+		// const imgURL = url.split('?')[0];
+
+		// console.log(imgURL);
+
+		setImageURL(url);
+	};
 }
 
 export default Signup
