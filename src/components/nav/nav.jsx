@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import "./nav.css";
 import fundrise from "../../assets/FundRise.svg"
+import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({token, clearToken}) {
   const [isMenuHidden, setMenuHidden] = useState(true);
-
+  const navigate = useNavigate();
   const handleBurgerClick = () => {
     setMenuHidden(!isMenuHidden);
   };
+  function handleLogout() {
+    clearToken();
+    console.log("Logout successful");
+    navigate("/"); // Redirect to the /login page after logout
+  }
 
   return (
     <nav>
