@@ -94,7 +94,7 @@ function Signup(props) {
 		console.log(file);
 
 		// fetch to server to get link from s3
-		const {url} = await fetch('http://localhost:4000/user/geturl').then(res => res.json());
+		const {url} = await fetch('http://localhost:4000/user/profileimage/makeurl').then(res => res.json());
 		console.log(url);
 
 		// fetch to s3 to upload image
