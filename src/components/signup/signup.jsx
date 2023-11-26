@@ -33,7 +33,7 @@ function Signup(props) {
 
       let results = await response.json();
       // console.log(results);
-      props.setToken(results.token);
+      props.setToken(results.token, results.user._id);
 
       if (response.status === 200) {
         navigate("/");//navigate to homepage

@@ -8,6 +8,7 @@ import Login from './components/login/login';
 
 function App() {
   const [token, setToken] = useState("");
+	const [userID, setUserID] = useState("");
 
   // Initialize the isLoggedIn state as false (user is not logged in)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,9 +26,11 @@ function App() {
     }
   }
 
-  function updateToken(newToken) {
+  function updateToken(newToken, newUserID) {
     setToken(newToken);
     localStorage.token = newToken;
+		setUserID(newUserID);
+		localStorage.userID = newUserID;
 
     // Set the isLoggedIn state to true when a token is updated (user is logged in)
     setIsLoggedIn(true);
