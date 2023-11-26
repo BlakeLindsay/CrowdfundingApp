@@ -12,6 +12,16 @@ const CreateCampaign = (props) => {
 
   async function handleCreateCampaign(e) {
     e.preventDefault();
+    
+
+    const resetForm = () => {
+      setCampaignName("");
+      setFundGoal("");
+      setCampaignType("");
+      setShortDesc("");
+      setDetailDesc("");
+      setPic(null);
+    };
 
     try {
       const formData = new FormData();
@@ -22,19 +32,20 @@ const CreateCampaign = (props) => {
       formData.append("detailDesc", detailDesc);
       formData.append("pic", pic);
 
-      const response = await fetch("http://localhost:4000/create", {
+      const response = await fetch("http://localhost:4000/campaign/create", {
         method: "POST",
         body: formData,
       });
 
       const results = await response.json();
+      console.log("FormData:", formData);
       console.log(response.status);
-      props.setToken(results.token);
       if (response.status === 200) {
         console.log("Campaign Created");
         console.log("Token:", results.token);
         props.setToken(results.token);
-        navigate("/my-campaign"); // Navigate to your campaigns page
+        resetForm(); // Reset form fields
+        navigate("/my-campaign"); // Navigate to campaigns page
       } else {
         console.log("Campaign Could Not Be Created");
       }
@@ -48,6 +59,9 @@ const CreateCampaign = (props) => {
     const file = e.target.files[0];
     setPic(file);
   }
+
+  
+  
 
 
   return (
@@ -80,12 +94,12 @@ const CreateCampaign = (props) => {
             />
           </div>
           <div className="mb-4">
-        <label htmlFor="dropdown" className="block text-white text-sm font-bold mb-2">
+        <label htmlFor="campaignType" className="block text-white text-sm font-bold mb-2">
           Select an Option
         </label>
         <select
          className="w-full bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-          id="dropdown"
+          id="campaignType"
           name="dropdown"
           onChange={(e) => setCampaignType(e.target.value)}
         >
@@ -98,12 +112,12 @@ const CreateCampaign = (props) => {
         </select>
       </div>
       <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="shortDescription">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="shortDesc">
               Short Description
             </label>
             <input
               className="w-full bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-              id="fundraisingGoal"
+              id="shortDesc"
               type=""
               placeholder="Short Description Here"
               onChange={(e) => setShortDesc(e.target.value)}
@@ -116,20 +130,20 @@ const CreateCampaign = (props) => {
             </label>
             <input
               className="placeholder:-translate-y-16 w-full h-40 bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-              id="fundraisingGoal"
+              id="detailedDesc"
               type="text"
               placeholder="Details Here"
               onChange={(e) => setDetailDesc(e.target.value)}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="photo">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="pic">
               Upload Photo
             </label>
             <input
               type="file"
               accept="image/*"
-              id="photo"
+              id="pic"
               onChange={handleFileChange}
               className="w-full bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2 mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
             />
