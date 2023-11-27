@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/nav/nav';
 import Signup from './components/signup/signup';
 import Login from './components/login/login';
+import Profile from './components/profile/Profile';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Routes>
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
+      <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       </Routes>
     </BrowserRouter>
   );

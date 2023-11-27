@@ -97,6 +97,7 @@ function Navbar() {
               </ul>
             </div>
           </div>
+					<a href="/profile">Profile</a>
         </div>
       </div>
     </nav>

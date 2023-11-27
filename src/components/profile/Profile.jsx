@@ -1,45 +1,77 @@
 import React, { useState, useEffect } from "react";
 
-function Profile() {
-	const [imageFile, setImageFile] = useState();
-	const [imageURL, setImageURL] = useState();
+function Profile({token, userID}) {
+	const [imageFile, setImageFile] = useState("");
+	const [imageURL, setImageURL] = useState("");
 
-	useEffect(() => {submitImageFile(imageFile)}, [imageFile]);
+	// useEffect(() => {submitImageFile(imageFile)}, [imageFile]);
 
 	return (
 		<div>
-			<input type="file" onChange={(e) => {
-				console.log(e);
-				setImageFile(e.target.files[0]);
-				return;
-			}} />
-			{/* <button onClick={submitImageFile}>submit imageFile</button> */}
+			<form onSubmit={submitImageFile}>
+				<input name="file" type="file" onChange={(e) => setImageFile(e.target.files[0])}/>
+				{/* <input name="image" type="image" /> */}
+				<button type="submit">submit</button>
+			</form>
 			<img src={`${imageURL}`} />
 		</div>
 	);
 
-	async function submitImageFile(file) {
-		console.log(file);
+	async function getImageLink() {
+		try {
+			console.log(token);
+			const {url} = await fetch('http://localhost:4000/user/geturl/profileimage', {
+				headers: new Headers({
+					'authorization': token
+				}),
+				method: 'GET'
+			}).then(res => res.json());
+			console.log(url);
+			const imgURL = url.split('?')[0];
+			console.log(imgURL);
+			setImageURL(imgURL);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-		// fetch to server to get link from s3
-		const {url} = await fetch('http://localhost:4000/user/profileimage/makeurl').then(res => res.json());
-		console.log(url);
+	async function submitImageFile() {
+		try {
+			const file = imageFile;
 
-		// fetch to s3 to upload image
-		await fetch(url, {
-			method: "PUT",
-			headers: new Headers({
-				"Content-Type": "multipart/form-data"
-			}),
-			body: file
-		});
+			console.log(file);
 
-		// fetch to our server to post link
-		const imgURL = url.split('?')[0];
+			// fetch to server to get link from s3
+			const res = await fetch('http://localhost:4000/user/makeurl/profileimage', {
+				headers: new Headers({
+					'content-type': 'application/json',
+					'Authorization': token
+				}),
+				method: 'GET'
+			});
 
-		console.log(imgURL);
+			const response = await res.json();
+			const url = response.url;
+			console.log(url);
 
-		setImageURL(imgURL);
+			// fetch to s3 to upload image
+			await fetch(url, {
+				method: "PUT",
+				headers: new Headers({
+					"Content-Type": "multipart/form-data"
+				}),
+				body: file
+			});
+
+			// fetch to our server to post link
+			const imgURL = url.split('?')[0];
+
+			console.log(imgURL);
+
+			setImageURL(imgURL);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
