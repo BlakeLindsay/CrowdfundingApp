@@ -31,14 +31,18 @@ const CreateCampaign = (props) => {
       formData.append("shortDesc", shortDesc);
       formData.append("detailDesc", detailDesc);
       formData.append("pic", pic);
-
+			
+			console.log("FormData:", formData);
       const response = await fetch("http://localhost:4000/campaign/create", {
+				headers: new Headers({
+					"Content-Type": "multipart/form-data",
+					"authorization": props.token
+				}),
         method: "POST",
         body: formData,
       });
 
       const results = await response.json();
-      console.log("FormData:", formData);
       console.log(response.status);
       if (response.status === 200) {
         console.log("Campaign Created");
