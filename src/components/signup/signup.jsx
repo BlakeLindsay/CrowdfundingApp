@@ -53,7 +53,7 @@ function Signup(props) {
   return (
     <div className="p-5 sm:p-0">
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8">
+      <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 mb-40 md:mt-40">
           <h2 className="text-[28px] font-bold text-white mb-6 text-center">
             Sign Up
           </h2>
