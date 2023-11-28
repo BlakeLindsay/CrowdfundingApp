@@ -4,7 +4,12 @@ function Profile({token, userID}) {
 	const [imageFile, setImageFile] = useState("");
 	const [imageURL, setImageURL] = useState("");
 
-	// useEffect(() => {submitImageFile(imageFile)}, [imageFile]);
+	// useEffect(() => {initProfile()}, []);
+
+	console.log(token);
+	if (token) {
+		initProfile();
+	}
 
 	return (
 		<div>
@@ -13,23 +18,36 @@ function Profile({token, userID}) {
 				{/* <input name="image" type="image" /> */}
 				<button type="submit">submit</button>
 			</form>
-			<img src={`${imageURL}`} />
+			<img src={`${imageURL}` } alt="profile picture" />
 		</div>
 	);
+
+	async function initProfile() {
+		try {
+			const res = await getImageLink();
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	async function getImageLink() {
 		try {
 			console.log(token);
-			const {url} = await fetch('http://localhost:4000/user/geturl/profileimage', {
+			const res = await fetch('http://localhost:4000/user/profileimage/geturl', {
 				headers: new Headers({
-					'authorization': token
+					'Content-Type': 'application/json',
+					'Authorization': token
 				}),
 				method: 'GET'
-			}).then(res => res.json());
-			console.log(url);
-			const imgURL = url.split('?')[0];
-			console.log(imgURL);
-			setImageURL(imgURL);
+			});
+			const response = await res.json();
+			const {url} = response;
+
+			if(res.status === 200) {
+				console.log(url);
+				setImageURL(url);
+			}
+
 		} catch (error) {
 			console.log(error);
 		}
@@ -69,6 +87,21 @@ function Profile({token, userID}) {
 			console.log(imgURL);
 
 			setImageURL(imgURL);
+
+			const res2 = await fetch(`http://localhost:4000/user/profileimage/saveurl`, {
+				headers: new Headers({
+					'Content-Type': 'application/json',
+					'Authorization': token
+				}),
+				method: 'POST',
+				body: JSON.stringify({
+					url: imgURL
+				})
+			});
+
+			if(res2.status !== 200) {
+				alert('The profile image did not save correctly.');
+			}
 		} catch (error) {
 			console.log(error);
 		}
