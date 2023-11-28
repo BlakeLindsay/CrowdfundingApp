@@ -21,9 +21,9 @@ function Navbar({ token, clearToken }) {
       <div className="bg-teal-50 pb-3">
         <div className="flex justify-between items-center">
           <a href="/">
-            <img className="w-60 p-2 pl-3 md:w-80" src={fundrise} alt="logo" />
+            <img className="w-60 p-2 pl-3 md:w-80 " src={fundrise} alt="logo" />
           </a>
-          <div className="px-4 cursor-pointer flex justify-end ">
+          <div className="pl-0 cursor-pointer flex justify-end ">
             <svg
               id="burger"
               onClick={handleBurgerClick}
@@ -94,10 +94,10 @@ function Navbar({ token, clearToken }) {
                   <li
                     className="text-cyan-900 font-bold md:hidden"
                     onClick={handleLogout}
-                  ><div className="px-2 flex justify-end  border-r-2 border-teal-50">
-                    <span>Log Out</span>                    
+                  ><div className="px-0 ml-0 flex justify-end  border-r-2 border-teal-50">
+                    <span>LogOut</span>                    
                       <svg
-                      className="w-4 ml-2 h-4 mt-1 text-cyan-900"
+                      className="w-4 ml-1 h-4 mt-1   text-cyan-900"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
