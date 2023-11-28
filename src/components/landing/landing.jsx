@@ -1,7 +1,12 @@
-import React from 'react'
-import './landing.css'
+import React, { useEffect } from 'react';
+import './landing.css';
 
-const Landing = () => {
+const Landing = ({ token }) => {
+  useEffect(() => {
+    // Log the token whenever it changes
+    console.log('Token value:', token);
+  }, [token]); // Re-run the effect whenever the token changes
+
   return (
     <div className="p-5 sm:p-0">
     <div className="flex flex-col items-center justify-center h-screen">
@@ -16,9 +21,20 @@ const Landing = () => {
               <h2 className='text-[17px] md:text-[22px] font-bold font-serif text-white mb-6 text-center'>Have a cause in need of funding?<br/>Create a campaign to get started FundRising</h2>
             </div>
             <div className='flex flex-col items-center justify-center'>
+          {token ? (
             <a href="/create">
-              <button className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300" type="submit">Create a Campaign</button></a>
-            </div>
+              <button className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300" type="button">
+                Create a Campaign
+              </button>
+            </a>
+          ) : (
+            <a href="/login">
+              <button className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300" type="button">
+                Login to Create a Campaign
+              </button>
+            </a>
+          )}
+        </div>
             <br/>
             <div className='flex flex-col items-center justify-center'>
          <hr className='w-[50%]' />
