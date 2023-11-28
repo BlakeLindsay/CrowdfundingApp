@@ -47,10 +47,10 @@ function App() {
     <BrowserRouter>
       <Navbar token={token} clearToken={clearToken} />
       <Routes>
-      <Route path="/" element={<Landing setToken={updateToken} />} />
+      <Route path="/" element={<Landing token={token} clearToken={clearToken} />} />
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
-      <Route path="/create" element={<CreateCampaign setoken={updateToken} />} />
+      <Route path="/create" element={<CreateCampaign setToken={updateToken} />} />
       </Routes>
     </BrowserRouter>
   );
