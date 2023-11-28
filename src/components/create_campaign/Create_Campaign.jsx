@@ -53,9 +53,10 @@ const CreateCampaign = (props) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-screen pt-4">
+    <div className="p-5 sm:p-0">
+    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 md:mt-40">
       <h2 className="text-[28px] font-bold text-white mb-6 text-center">Create a New Campaign</h2>
-      <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 overflow-y-auto">
         <form className="flex flex-col" onSubmit={handleCreateCampaign}>
           <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="campaignName">
@@ -153,6 +154,7 @@ const CreateCampaign = (props) => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };
