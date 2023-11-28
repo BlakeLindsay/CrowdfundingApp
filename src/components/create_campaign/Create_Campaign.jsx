@@ -7,11 +7,12 @@ const CreateCampaign = (props) => {
   const [campaignType, setCampaignType] = useState("");
   const [shortDesc, setShortDesc] = useState("");
   const [detailDesc, setDetailDesc] = useState("");
-  const [pic, setPic] = useState(null); // State to hold the selected file
   const navigate = useNavigate();
 
   async function handleCreateCampaign(e) {
     e.preventDefault();
+
+    const authToken = localStorage.getItem("token");
     
 
     const resetForm = () => {
@@ -20,30 +21,27 @@ const CreateCampaign = (props) => {
       setCampaignType("");
       setShortDesc("");
       setDetailDesc("");
-      setPic(null);
     };
 
     try {
-      const formData = new FormData();
-      formData.append("campaignName", campaignName);
-      formData.append("fundGoal", fundGoal);
-      formData.append("campaignType", campaignType);
-      formData.append("shortDesc", shortDesc);
-      formData.append("detailDesc", detailDesc);
-      formData.append("pic", pic);
 
       const response = await fetch("http://localhost:4000/campaign/create", {
+        headers: new Headers({
+					'Content-Type': 'application/json',
+					'Authorization': authToken,
+				}),
         method: "POST",
-        body: formData,
+        body: JSON.stringify({
+          campaignName,
+          fundGoal,
+          campaignType,
+          shortDesc,
+          detailDesc,
+        }),
       });
 
-      const results = await response.json();
-      console.log("FormData:", formData);
-      console.log(response.status);
       if (response.status === 200) {
         console.log("Campaign Created");
-        console.log("Token:", results.token);
-        props.setToken(results.token);
         resetForm(); // Reset form fields
         navigate("/my-campaign"); // Navigate to campaigns page
       } else {
@@ -53,16 +51,6 @@ const CreateCampaign = (props) => {
       console.log(error);
     }
   }
-
-  // Handle file input change
-  function handleFileChange(e) {
-    const file = e.target.files[0];
-    setPic(file);
-  }
-
-  
-  
-
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen pt-4">
@@ -103,12 +91,12 @@ const CreateCampaign = (props) => {
           name="dropdown"
           onChange={(e) => setCampaignType(e.target.value)}
         >
-          <option value="option1">Medical</option>
-          <option value="option2">Memorial</option>
-          <option value="option3">Emergency</option>
-          <option value="option4">Nonprofit</option>
-          <option value="option5">Financial Emergency</option>
-          <option value="option6">Animals</option>
+          <option value="Medical">Medical</option>
+          <option value="Memorial">Memorial</option>
+          <option value="Emergency">Emergency</option>
+          <option value="Nonprofit">Nonprofit</option>
+          <option value="Financial Emergency">Financial Emergency</option>
+          <option value="Animals">Animals</option>
         </select>
       </div>
       <div className="mb-4">
@@ -136,7 +124,7 @@ const CreateCampaign = (props) => {
               onChange={(e) => setDetailDesc(e.target.value)}
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="pic">
               Upload Photo
             </label>
@@ -147,8 +135,8 @@ const CreateCampaign = (props) => {
               onChange={handleFileChange}
               className="w-full bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2 mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
             />
-          </div>
-          {pic && (
+          </div> */}
+         {/*  {pic && (
             <div className="mb-4">
               <img
                 src={URL.createObjectURL(pic)} // Create a URL for the selected file
@@ -156,7 +144,7 @@ const CreateCampaign = (props) => {
                 className="max-w-full h-auto"
               />
             </div>
-          )}
+          )} */}
           <button
             className="bg-teal-500 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-600 transition ease-in duration-200"
             type="submit"
