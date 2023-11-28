@@ -35,16 +35,17 @@ function Profile({token, userID}) {
 		}
 	};
 
-	async function submitImageFile() {
+	async function submitImageFile(e) {
+		e.preventDefault();
 		try {
 			const file = imageFile;
 
 			console.log(file);
 
 			// fetch to server to get link from s3
-			const res = await fetch('http://localhost:4000/user/makeurl/profileimage', {
+			const res = await fetch('http://localhost:4000/user/profileimage/makeurl', {
 				headers: new Headers({
-					'content-type': 'application/json',
+					'Content-Type': 'application/json',
 					'Authorization': token
 				}),
 				method: 'GET'
@@ -52,7 +53,6 @@ function Profile({token, userID}) {
 
 			const response = await res.json();
 			const url = response.url;
-			console.log(url);
 
 			// fetch to s3 to upload image
 			await fetch(url, {
