@@ -16,7 +16,8 @@ const Landing = () => {
               <h2 className='text-[17px] md:text-[22px] font-bold font-serif text-white mb-6 text-center'>Have a cause in need of funding?<br/>Create a campaign to get started FundRising</h2>
             </div>
             <div className='flex flex-col items-center justify-center'>
-              <button className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300" type="submit">Create a Campaign</button>
+            <a href="/create">
+              <button className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300" type="submit">Create a Campaign</button></a>
             </div>
             <br/>
             <div className='flex flex-col items-center justify-center'>
