@@ -50,7 +50,7 @@ function App() {
       <Route path="/" element={<Landing token={token} clearToken={clearToken} />} />
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
-      <Route path="/create" element={<CreateCampaign setToken={updateToken} />} />
+      <Route path="/create" element={<CreateCampaign setoken={updateToken} token={token} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -25,6 +25,7 @@ const CreateCampaign = (props) => {
 
     try {
 
+
       const response = await fetch("http://localhost:4000/campaign/create", {
         headers: new Headers({
 					'Content-Type': 'application/json',
@@ -40,6 +41,8 @@ const CreateCampaign = (props) => {
         }),
       });
 
+      const results = await response.json();
+      console.log(response.status);
       if (response.status === 200) {
         console.log("Campaign Created");
         resetForm(); // Reset form fields
