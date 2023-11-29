@@ -18,12 +18,16 @@ function Navbar({ token, clearToken }) {
 
   return (
     <nav>
-      <div className="bg-teal-50 pb-3">
+       <div
+        className={`bg-teal-50 transition-all duration-300 ${
+          isMenuHidden ? "h-24" : "h-36"
+        }`}
+      >
         <div className="flex justify-between items-center">
           <a href="/">
             <img className="w-60 p-2 pl-3 md:w-80 " src={fundrise} alt="logo" />
           </a>
-          <div className="pl-0 cursor-pointer flex justify-end ">
+          <div className="pl-0 cursor-pointer flex justify-end relative">
             <svg
               id="burger"
               onClick={handleBurgerClick}
@@ -42,9 +46,9 @@ function Navbar({ token, clearToken }) {
             </svg>
 
             <div>
-              <ul className={`p-2 ${isMenuHidden ? "hidden" : ""}`} id="menu">
+              <ul className={`pr-4 pt-2  absolute right-0 top-full ${isMenuHidden ? "hidden" : ""}`} id="menu">
                 {!token && (
-                  <li className="text-cyan-900 font-bold md:hidden">
+                  <li className="text-cyan-900 font-bold md:hidden pb-2">
                     <a href="/signup" className="px-2 flex justify-end">
                       <span>Signup </span>
                       <svg
@@ -65,11 +69,13 @@ function Navbar({ token, clearToken }) {
                   </li>
                 )}
 
+{!token && ( <hr className="border-t-2 border-cyan-900" /> )}
+
                 {!token && (
-                  <li className="text-cyan-900 font-bold md:hidden">
+                  <li className="text-cyan-900 font-bold md:hidden pt-2">
                     <a
                       href="/login"
-                      className="px-2 pt-1 flex justify-end border-r-2 border-teal-50"
+                      className="px-2 flex justify-end border-r-2 border-teal-50"
                     >
                       <span>Login </span>
                       <svg
@@ -92,12 +98,13 @@ function Navbar({ token, clearToken }) {
 
                 {token ? (
                   <li
-                    className="text-cyan-900 font-bold md:hidden"
+                    className="text-cyan-900 font-bold md:hidden pb-2"
                     onClick={handleLogout}
-                  ><div className="px-0 ml-0 flex justify-end  border-r-2 border-teal-50">
-                    <span>LogOut</span>                    
+                  >
+                    <div className="px-0 ml-0 flex justify-end  border-r-2 border-teal-50">
+                      <span>LogOut</span>
                       <svg
-                      className="w-4 ml-1 h-4 mt-1   text-cyan-900"
+                        className="w-4 ml-1 h-4 mt-1   text-cyan-900"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -113,7 +120,36 @@ function Navbar({ token, clearToken }) {
                     </div>
                   </li>
                 ) : null}
+
+{token ? (<hr className="border-t-2 border-cyan-900" />) : null}
                 
+                {token ? (
+                  <li
+                    className="text-cyan-900 font-bold md:hidden pt-2"
+                    onClick={handleLogout}
+                  >
+                    <a
+                      href="/profile"
+                      className="pl-2 pt-1 flex justify-end "
+                    >
+                      <span className="">Profile</span>
+                      <svg
+                        className="w-6 ml-0 h-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
 
@@ -148,10 +184,18 @@ function Navbar({ token, clearToken }) {
                     </span>
                   ) : null}
                 </li>
+                <li>
+                  {token ? (
+                    <a href="/profile">
+                      <span className="btn text-cyan-900 font-bold border-cyan-900 border-2 mr-10 hidden md:block  hover:-translate-y-1 hover:scale-110 hover:bg-cyan-900 hover:text-teal-50 duration-300">
+                        Profile
+                      </span>
+                    </a>
+                  ) : null}
+                </li>
               </ul>
             </div>
           </div>
-					<a href="/profile">Profile</a>
         </div>
       </div>
     </nav>

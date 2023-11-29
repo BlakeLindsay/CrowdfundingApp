@@ -95,8 +95,9 @@ const CreateCampaign = (props) => {
           name="dropdown"
           onChange={(e) => setCampaignType(e.target.value)}
         >
+         <option value="Select">Select an option</option> 
+          <option value="Memorial">Memorial</option> 
           <option value="Medical">Medical</option>
-          <option value="Memorial">Memorial</option>
           <option value="Emergency">Emergency</option>
           <option value="Nonprofit">Nonprofit</option>
           <option value="Financial Emergency">Financial Emergency</option>
