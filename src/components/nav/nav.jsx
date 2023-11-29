@@ -18,7 +18,7 @@ function Navbar({ token, clearToken }) {
 
   return (
     <nav>
-       <div
+      <div
         className={`bg-teal-50 transition-all duration-300 ${
           isMenuHidden ? "h-24" : "h-36"
         }`}
@@ -46,7 +46,12 @@ function Navbar({ token, clearToken }) {
             </svg>
 
             <div>
-              <ul className={`pr-4 pt-2  absolute right-0 top-full ${isMenuHidden ? "hidden" : ""}`} id="menu">
+              <ul
+                className={`pr-4 pt-2  absolute right-0 top-full ${
+                  isMenuHidden ? "hidden" : ""
+                }`}
+                id="menu"
+              >
                 {!token && (
                   <li className="text-cyan-900 font-bold md:hidden pb-2">
                     <a href="/signup" className="px-2 flex justify-end">
@@ -69,7 +74,7 @@ function Navbar({ token, clearToken }) {
                   </li>
                 )}
 
-{!token && ( <hr className="border-t-2 border-cyan-900" /> )}
+                {!token && <hr className="border-t-2 border-cyan-900" />}
 
                 {!token && (
                   <li className="text-cyan-900 font-bold md:hidden pt-2">
@@ -121,17 +126,11 @@ function Navbar({ token, clearToken }) {
                   </li>
                 ) : null}
 
-{token ? (<hr className="border-t-2 border-cyan-900" />) : null}
-                
+                {token ? <hr className="border-t-2 border-cyan-900" /> : null}
+
                 {token ? (
-                  <li
-                    className="text-cyan-900 font-bold md:hidden pt-2"
-                    onClick={handleLogout}
-                  >
-                    <a
-                      href="/profile"
-                      className="pl-2 pt-1 flex justify-end "
-                    >
+                  <li className="text-cyan-900 font-bold md:hidden pt-2">
+                    <a href="/profile" className="pl-2 pt-1 flex justify-end ">
                       <span className="">Profile</span>
                       <svg
                         className="w-6 ml-0 h-6"
