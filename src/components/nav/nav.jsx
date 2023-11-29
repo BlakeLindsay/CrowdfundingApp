@@ -151,6 +151,7 @@ function Navbar({ token, clearToken }) {
               </ul>
             </div>
           </div>
+					<a href="/profile">Profile</a>
         </div>
       </div>
     </nav>

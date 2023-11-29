@@ -4,13 +4,14 @@ import './App.css';
 import Navbar from './components/nav/nav';
 import Signup from './components/signup/signup';
 import Login from './components/login/login';
+import Profile from './components/profile/Profile';
 import Landing from './components/landing/landing';
 import CreateCampaign from './components/create_campaign/Create_Campaign';
 
 
-
 function App() {
   const [token, setToken] = useState("");
+	const [userID, setUserID] = useState("");
 
   // Initialize the isLoggedIn state as false (user is not logged in)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,9 +29,11 @@ function App() {
     }
   }
 
-  function updateToken(newToken) {
+  function updateToken(newToken, newUserID) {
     setToken(newToken);
     localStorage.token = newToken;
+		setUserID(newUserID);
+		localStorage.userID = newUserID;
 
     // Set the isLoggedIn state to true when a token is updated (user is logged in)
     setIsLoggedIn(true);
@@ -50,6 +53,7 @@ function App() {
       <Route path="/" element={<Landing token={token} clearToken={clearToken} />} />
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
+      <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       <Route path="/create" element={<CreateCampaign setoken={updateToken} token={token} />} />
       </Routes>
     </BrowserRouter>

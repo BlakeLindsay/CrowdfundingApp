@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,10 +7,6 @@ function Signup(props) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-	const [imageFile, setImageFile] = useState();
-	const [imageURL, setImageURL] = useState();
-
-	useEffect(() => {submitImageFile(imageFile)}, [imageFile]);
   
   const signupRoute = "http://localhost:4000/user/signup";
 
@@ -37,7 +33,7 @@ function Signup(props) {
 
       let results = await response.json();
       // console.log(results);
-      props.setToken(results.token);
+      props.setToken(results.token, results.user._id);
 
       if (response.status === 200) {
         navigate("/");//navigate to homepage
@@ -78,41 +74,10 @@ function Signup(props) {
                 <p className='text-white mt-4 text-center'>Already have an account?
                 <a className='text-teal-200 hover:underline mt-4 px-1' href='/login'>Login</a></p>
           </form>
-					<input type="file" onChange={(e) => {
-						console.log(e);
-						setImageFile(e.target.files[0]);
-						return;
-					}} />
-					{/* <button onClick={submitImageFile}>submit imageFile</button> */}
-					<img src={`${imageURL}`} />
         </div>
       </div>
     </div>
   );
-
-	async function submitImageFile(file) {
-		console.log(file);
-
-		// fetch to server to get link from s3
-		const {url} = await fetch('http://localhost:4000/user/geturl').then(res => res.json());
-		console.log(url);
-
-		// fetch to s3 to upload image
-		await fetch(url, {
-			method: "PUT",
-			headers: new Headers({
-				"Content-Type": "multipart/form-data"
-			}),
-			body: file
-		});
-
-		// fetch to our server to post link
-		const imgURL = url.split('?')[0];
-
-		console.log(imgURL);
-
-		setImageURL(imgURL);
-	};
 }
 
 export default Signup

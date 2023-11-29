@@ -24,11 +24,11 @@ import { useNavigate } from "react-router-dom";
   
         const results = await response.json();
         console.log(response.status);
-        props.setToken(results.token);
         if (response.status === 200) {
           console.log("Login successful");
           console.log("Token:", results.token);
-          props.setToken(results.token);
+					console.log("userID:", results.user._id);
+          props.setToken(results.token, results.user._id);
           navigate("/"); // Navigate to homepage
         } else {
           console.log("Login failed");
