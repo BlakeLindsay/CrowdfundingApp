@@ -56,7 +56,7 @@ function App() {
       <Route path="/login" element={<Login setToken={updateToken} />} />
       <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
-      <Route path="/campaign/:campaignName" element={<IndividualCampaign token={token} userID={userID}/>} />
+      <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
       </Routes>
     </BrowserRouter>
   );

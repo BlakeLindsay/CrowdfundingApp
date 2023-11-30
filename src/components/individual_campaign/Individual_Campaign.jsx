@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
     
     const IndividualCampaign = () => {
-      const { campaignName } = useParams();
+      // const { campaignId } = useParams();
       const [campaign, setCampaign] = useState(null);
+			const location = useLocation();
+			const { campaignId } = location.state;
     
       useEffect(() => {
-        console.log("Campaign ID:", campaignName);
+        console.log("Campaign ID:", campaignId);
         const fetchData = async () => {
           try {
-            const authToken = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:4000/campaign/${campaignName}`, {
+            // const authToken = localStorage.getItem("token");
+            const response = await fetch(`http://localhost:4000/campaign/${campaignId}`, {
               headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': authToken,
+                // 'Authorization': authToken,
               }),
-              method: "GET",
+              method: "GET"
             });
     
             if (response.status === 200) {
               const result = await response.json();
+							console.log(result);
               setCampaign(result);
             } else {
               console.log("Campaign not found");
@@ -30,7 +33,7 @@ import { useParams } from "react-router-dom";
         };
     
         fetchData();
-      }, [campaignName]);
+      }, [campaignId]);
     
       if (!campaign) {
         return <div>Loading...</div>;

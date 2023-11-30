@@ -47,11 +47,11 @@ const CreateCampaign = (props) => {
       if (response.status === 200) {
         console.log("Campaign Created");
         resetForm(); // Reset form fields
+				console.log(results);
+        // const createdCampaignName = results.campaignName;
+        console.log("Created Campaign ID:", results.madeCampaign._id);
 
-        const createdCampaignName = results.campaignName;
-        console.log("Created Campaign ID:", createdCampaignName);
-
-        navigate(`/campaign/${createdCampaignName}`);
+        navigate(`/campaign`, {state: {campaignId: results.madeCampaign._id}});
       } else {
         console.log("Campaign Could Not Be Created");
       }
