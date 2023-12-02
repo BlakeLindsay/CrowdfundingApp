@@ -43,10 +43,15 @@ const CreateCampaign = (props) => {
 
       const results = await response.json();
       console.log(response.status);
+
       if (response.status === 200) {
         console.log("Campaign Created");
         resetForm(); // Reset form fields
-        navigate("/my-campaign"); // Navigate to campaigns page
+				console.log(results);
+        // const createdCampaignName = results.campaignName;
+        console.log("Created Campaign ID:", results.madeCampaign._id);
+
+        navigate(`/campaign`, {state: {campaignId: results.madeCampaign._id}});
       } else {
         console.log("Campaign Could Not Be Created");
       }
@@ -95,7 +100,7 @@ const CreateCampaign = (props) => {
           name="dropdown"
           onChange={(e) => setCampaignType(e.target.value)}
         >
-         <option value="Select">Select an option</option> 
+         <option value="Memorial">Select an Option</option> 
           <option value="Memorial">Memorial</option> 
           <option value="Medical">Medical</option>
           <option value="Emergency">Emergency</option>
