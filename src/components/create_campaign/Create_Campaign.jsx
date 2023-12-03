@@ -16,33 +16,34 @@ const CreateCampaign = ({ token }) => {
   async function getS3Link() {
     try {
       const file = imageFile;
-  
+
       // Fetch to the server to get the S3 link
-      const res = await fetch('http://localhost:4000/user/profileimage/makeurl', {
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': token
-        }),
-        method: 'GET'
-      });
-  
+      const res = await fetch(
+        "http://localhost:4000/campaign/campaignimage/makeurl",
+        {
+          headers: new Headers({
+            "Content-Type": "application/json",
+            Authorization: token,
+          }),
+          method: "GET",
+        }
+      );
+
       const response = await res.json();
       const url = response.url;
-  
+
       // Fetch to S3 to upload the image
       await fetch(url, {
         method: "PUT",
         headers: new Headers({
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         }),
-        body: file
+        body: file,
       });
-  
+
       // Extract the image URL from the S3 link
-      const campaignImageLink = url.split('?')[0];
-  
-      console.log(imgURL);
-  
+      const campaignImageLink = url.split("?")[0];
+
       return campaignImageLink;
     } catch (error) {
       console.error("Error getting S3 link:", error);
@@ -50,18 +51,18 @@ const CreateCampaign = ({ token }) => {
       return null;
     }
   }
-  
+
   async function handleCreateCampaign(e) {
     e.preventDefault();
-  
+
     try {
       // Fetch S3 link before form submission
       const s3Link = await getS3Link();
-  
+
       if (s3Link !== null) {
         // Set the S3 link in the state
         setCampaignImageLink(campaignImageLink);
-  
+
         // Create the campaign with the obtained S3 link
         const response = await fetch("http://localhost:4000/campaign/create", {
           headers: new Headers({
@@ -79,16 +80,17 @@ const CreateCampaign = ({ token }) => {
             owner,
           }),
         });
-  
+
+        const results = await response.json();
         if (response.status === 200) {
           console.log("Campaign Created");
           resetForm();
-          navigate(`/campaign`, {state: {campaignId: results.madeCampaign._id}});
+          navigate(`/campaign`, {
+            state: { campaignId: results.madeCampaign._id },
+          });
         } else {
           console.log("Campaign Could Not Be Created");
         }
-
-
       } else {
         console.log("Unable to fetch S3 Link. Campaign not created.");
       }
@@ -96,9 +98,6 @@ const CreateCampaign = ({ token }) => {
       console.error("Error creating campaign:", error);
     }
   }
-  
-  
-  
 
   const resetForm = () => {
     setCampaignName("");
@@ -112,9 +111,7 @@ const CreateCampaign = ({ token }) => {
     setOwner("");
   };
 
-
   return (
-
     <div className="p-5 sm:p-0 ">
       <div className="flex flex-col items-center justify-center overflow-y-scroll">
         <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 md:mt-40">
@@ -197,10 +194,9 @@ const CreateCampaign = ({ token }) => {
               >
                 A Detailed Description
               </label>
-              <input
-                className="placeholder:-translate-y-16 w-full h-40 bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2  mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
+              <textarea
+                className="w-full h-40 bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2 mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
                 id="detailedDesc"
-                type="text"
                 placeholder="Details Here"
                 onChange={(e) => setDetailDesc(e.target.value)}
               />
