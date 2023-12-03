@@ -8,6 +8,7 @@ import Profile from './components/profile/Profile';
 import Landing from './components/landing/landing';
 import CreateCampaign from './components/create_campaign/Create_Campaign';
 import IndividualCampaign from './components/individual_campaign/Individual_Campaign';
+import Donate from './components/donate/Donate';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
       <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
       <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
+			<Route path="/donate" element={<Donate />} />
       </Routes>
     </BrowserRouter>
   );
