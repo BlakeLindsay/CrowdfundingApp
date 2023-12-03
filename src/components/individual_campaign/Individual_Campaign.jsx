@@ -7,11 +7,19 @@ const IndividualCampaign = () => {
   const location = useLocation();
   const { campaignId } = location.state;
 
-  // const calculateProgressBarWidth = () => {
-  //   const percentage = (campaign.fundRaised / campaign.fundGoal) * 100;
-  //   return `${Math.min(percentage, 100)}%`;
-  // }; 
-  // console.log("width total:", calculateProgressBarWidth())
+  const calculateProgressBarWidth = () => {
+    if (!campaign) {
+      return '0%'; // or any default value you prefer
+    }
+  
+    const percentage = (campaign.fundRaised / campaign.fundGoal) * 100;
+    
+    if (isNaN(percentage)) {
+      return '0%';
+    } else {
+      return `${Math.min(percentage, 100)}%`;
+    }
+  };
 
 
   useEffect(() => {
@@ -66,24 +74,25 @@ const IndividualCampaign = () => {
           <div className="pt-2">
             <div className="w-full bg-gray-200 rounded-full max-h-3.5 dark:bg-gray-500 text-xs font-bold text-blue-100 text-center ">
             <div
-                className="bg-teal-400 max-h-3.5 text-xs font-bold text-blue-100 text-center rounded-full"
-                style={{ width: "45%"}}
-              > ${campaign.fundRaised} 
-                
-              </div>of ${campaign.fundGoal} Raised
+                className="bg-teal-400 max-h-3.5 text-xs font-bold  text-teal-400 rounded-full"
+                style={{ width: calculateProgressBarWidth() }}
+              > '
+              </div>${campaign.fundRaised} of ${campaign.fundGoal} Raised
           </div>
-
-          <p className="block pt-3 text-white text-sm font-bold mb-2">
-            Fundraising Goal: ${campaign.fundGoal}
-          </p>
-          <p className="block text-white text-sm font-bold mb-2">
+          <p className="block pt-5 text-white text-sm font-bold mb-2">
             Campaign Type: {campaign.campaignType}
-          </p>
+          </p>  
           <p className="block text-white text-sm font-bold mb-2">
+            Fundraising Goal: ${campaign.fundGoal}
+          </p> 
+          {campaign.campaignImageLink && (
+            <img className="pt-2" src={campaign.campaignImageLink} alt="Campaign" />
+          )}
+          <p className="block text-white text-sm font-bold mt-4 mb-2 ">
             Detailed Description: {campaign.detailDesc}
           </p>
+         
           
-          <br />
           <div className="flex justify-center">
             <button
               className="bg-teal-400 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-600 transition ease-in duration-200"
