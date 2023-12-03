@@ -67,6 +67,9 @@ const IndividualCampaign = () => {
           <h2 className="text-[28px] font-bold text-white mb-6 text-center">
             Help to fund {campaign.campaignName}
           </h2>
+          <p className="block text-white text-sm font-bold mt-4 mb-2 ">
+            Fund-Riser: {campaign.owner}
+          </p>
           <p className="block text-white text-sm font-bold mb-2">
             Short Description: {campaign.shortDesc}
           </p>
