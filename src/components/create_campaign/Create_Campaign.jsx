@@ -88,6 +88,7 @@ const CreateCampaign = ({ token }) => {
           console.log("Campaign Could Not Be Created");
         }
 
+
       } else {
         console.log("Unable to fetch S3 Link. Campaign not created.");
       }
