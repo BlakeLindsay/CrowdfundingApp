@@ -7,6 +7,7 @@ import Login from './components/login/login';
 import Profile from './components/profile/Profile';
 import Landing from './components/landing/landing';
 import CreateCampaign from './components/create_campaign/Create_Campaign';
+import IndividualCampaign from './components/individual_campaign/Individual_Campaign';
 
 
 function App() {
@@ -54,7 +55,8 @@ function App() {
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
       <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
-      <Route path="/create" element={<CreateCampaign setoken={updateToken} token={token} />} />
+      <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
+      <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
       </Routes>
     </BrowserRouter>
   );

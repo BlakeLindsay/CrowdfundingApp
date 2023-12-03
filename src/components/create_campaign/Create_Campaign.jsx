@@ -9,7 +9,7 @@ const CreateCampaign = ({ token }) => {
   const [detailDesc, setDetailDesc] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [setCampaignImageLink] = useState("");
+  const [campaignImageLink, setCampaignImageLink] = useState("");
   const [owner, setOwner] = useState("");
   const navigate = useNavigate();
 
@@ -39,11 +39,11 @@ const CreateCampaign = ({ token }) => {
       });
   
       // Extract the image URL from the S3 link
-      const imgURL = url.split('?')[0];
+      const campaignImageLink = url.split('?')[0];
   
       console.log(imgURL);
   
-      return imgURL;
+      return campaignImageLink;
     } catch (error) {
       console.error("Error getting S3 link:", error);
       // Handle errors, perhaps set an error state or show a user-friendly message
@@ -60,7 +60,7 @@ const CreateCampaign = ({ token }) => {
   
       if (s3Link !== null) {
         // Set the S3 link in the state
-        setCampaignImageLink(s3Link);
+        setCampaignImageLink(campaignImageLink);
   
         // Create the campaign with the obtained S3 link
         const response = await fetch("http://localhost:4000/campaign/create", {
@@ -83,10 +83,11 @@ const CreateCampaign = ({ token }) => {
         if (response.status === 200) {
           console.log("Campaign Created");
           resetForm();
-          navigate("/my-campaign");
+          navigate(`/campaign`, {state: {campaignId: results.madeCampaign._id}});
         } else {
           console.log("Campaign Could Not Be Created");
         }
+
       } else {
         console.log("Unable to fetch S3 Link. Campaign not created.");
       }
@@ -112,6 +113,7 @@ const CreateCampaign = ({ token }) => {
 
 
   return (
+
     <div className="p-5 sm:p-0 ">
       <div className="flex flex-col items-center justify-center overflow-y-scroll">
         <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 md:mt-40">
@@ -162,6 +164,7 @@ const CreateCampaign = ({ token }) => {
                 name="dropdown"
                 onChange={(e) => setCampaignType(e.target.value)}
               >
+                <option value="Select">Select an Option</option>
                 <option value="Medical">Medical</option>
                 <option value="Memorial">Memorial</option>
                 <option value="Emergency">Emergency</option>
@@ -170,6 +173,7 @@ const CreateCampaign = ({ token }) => {
                 <option value="Animals">Animals</option>
               </select>
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-bold mb-2"
