@@ -201,7 +201,7 @@ const CreateCampaign = ({ token }) => {
                 onChange={(e) => setDetailDesc(e.target.value)}
               />
             </div>
-            {/* //! */}
+            
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-bold mb-2"
