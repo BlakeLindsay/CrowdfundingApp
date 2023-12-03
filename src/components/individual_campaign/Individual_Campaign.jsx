@@ -50,6 +50,7 @@ const IndividualCampaign = () => {
       }
     };
 
+    //!
     fetchData();
   }, [campaignId]);
 
