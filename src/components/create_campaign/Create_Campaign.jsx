@@ -43,10 +43,12 @@ const CreateCampaign = (props) => {
 
       const results = await response.json();
       console.log(response.status);
+      console.log("State before navigating:", { campaignId: results.madeCampaign._id });
+      
 
       if (response.status === 200) {
         console.log("Campaign Created");
-        resetForm(); // Reset form fields
+        // resetForm(); // Reset form fields
 				console.log(results);
         // const createdCampaignName = results.campaignName;
         console.log("Created Campaign ID:", results.madeCampaign._id);
