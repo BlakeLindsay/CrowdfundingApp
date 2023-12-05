@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
-const IndividualCampaign = ({userID, token}) => {
+const IndividualCampaign = ({ userID, token }) => {
   // const { campaignId } = useParams();
   const [campaign, setCampaign] = useState(null);
   const location = useLocation();
   const { campaignId } = location.state;
   const navigate = useNavigate();
-  
 
   const calculateProgressBarWidth = () => {
     if (!campaign) {
@@ -31,7 +30,7 @@ const IndividualCampaign = ({userID, token}) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': token
+            Authorization: token,
           },
         }
       );
@@ -45,6 +44,10 @@ const IndividualCampaign = ({userID, token}) => {
     } catch (error) {
       console.error("Error deleting campaign:", error);
     }
+  };
+
+  const handleEditCampaign = () => {
+    navigate(`/update/${campaignId}`);
   };
 
   useEffect(() => {
@@ -67,7 +70,6 @@ const IndividualCampaign = ({userID, token}) => {
           const result = await response.json();
           console.log(result);
           setCampaign(result.campaign);
-          
         } else {
           console.log("Campaign not found");
         }
@@ -85,8 +87,8 @@ const IndividualCampaign = ({userID, token}) => {
 
   console.log("Campaign Name:", campaign.campaignName);
   console.log("Fundraising Goal:", campaign.fundGoal);
-  console.log("OwnerId:", campaign.ownerID)
-  console.log("UserId:", userID)
+  console.log("OwnerId:", campaign.ownerID);
+  console.log("UserId:", userID);
 
   return (
     <div className="p-5 sm:p-0">
@@ -139,16 +141,27 @@ const IndividualCampaign = ({userID, token}) => {
               </button>
             </div>
 
-            {userID === campaign.ownerID ? 
-                <div className="flex justify-center pt-3">
-                  <button
-                    className="bg-red-500 text-white font-medium py-2 px-4 rounded-md hover:bg-red-600 transition ease-in duration-200"
-                    onClick={handleDeleteCampaign}
-                  >
-                    Delete Campaign
-                  </button>
-                </div>
-              : null } 
+            {userID === campaign.ownerID ? (
+              <div className="flex justify-center pt-3">
+                <button
+                  className="bg-red-500 text-white font-medium py-2 px-4 rounded-md hover:bg-red-600 transition ease-in duration-200"
+                  onClick={handleDeleteCampaign}
+                >
+                  Delete Campaign
+                </button>
+              </div>
+            ) : null}
+
+            {userID === campaign.ownerID ? (
+              <div className="flex justify-center pt-3">
+                <button
+                  className="bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 transition ease-in duration-200"
+                  onClick={handleEditCampaign}
+                >
+                  Edit Campaign
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
