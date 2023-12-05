@@ -18,11 +18,17 @@ function App() {
   // Initialize the isLoggedIn state as false (user is not logged in)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(initializeToken, []);
+  useEffect(() => {
+		setToken(localStorage.token);
+		setUserID(localStorage.userID);
+	console.log("TOKEN:", token);
+    
+    console.log("UserId:", userID)}, 
+	 []);
 
   function initializeToken() {
     const storedToken = localStorage.token;
-    console.log("TOKEN:", storedToken);
+   
 
     if (storedToken) {
       setToken(storedToken);
@@ -48,6 +54,7 @@ function App() {
     // Set the isLoggedIn state to false when the user logs out
     setIsLoggedIn(false);
   }
+
   return (
     <BrowserRouter>
       <Navbar token={token} clearToken={clearToken} />
