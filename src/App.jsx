@@ -9,6 +9,7 @@ import Landing from './components/landing/landing';
 import CreateCampaign from './components/create_campaign/Create_Campaign';
 import IndividualCampaign from './components/individual_campaign/Individual_Campaign';
 import Donate from './components/donate/Donate';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 
 function App() {
@@ -49,6 +50,8 @@ function App() {
     setIsLoggedIn(false);
   }
   return (
+		<>
+		<PayPalScriptProvider />
     <BrowserRouter>
       <Navbar token={token} clearToken={clearToken} />
       <Routes>
@@ -61,6 +64,7 @@ function App() {
 			<Route path="/donate" element={<Donate />} />
       </Routes>
     </BrowserRouter>
+		</>
   );
 }
 

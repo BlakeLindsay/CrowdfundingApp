@@ -69,9 +69,9 @@ function Donate() {
 	}
 
 	return (
-		<PayPalScriptProvider options={{ clientId: "AXy-0JzMIvts3Z2ido6QQjaA7uEoTzHiz25pnvRjhAzlrKysP6h0VKj5SlYlj3DThWiPwAgPn7dMWWKG", components: "buttons", currency: "USD" }}>
-      <ButtonWrapper showSpinner={false} />
-    </PayPalScriptProvider>
+		<PayPalScriptProvider options={{ clientId: "AbyIxXLDlr4cgKa-KLMdsF7MJXFIf_CBasZjrtfAnCZUeoutO3Y7ZSPiYut8K33WaKWuHOnb_cUKaqMu", components: "buttons", currency: "USD" }}>
+			<button onClick={() => {}}>Donate</button>
+		</PayPalScriptProvider>
 	);
 }
 
