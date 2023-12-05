@@ -7,6 +7,7 @@ function Profile({token, userID}) {
 	// useEffect(() => {initProfile()}, []);
 
 	console.log(token);
+	console.log("UserId:", userID)
 	if (token) {
 		initProfile();
 	}
