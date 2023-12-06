@@ -8,9 +8,10 @@ import {
 const style = {"layout":"vertical"};
 
 function Donate() {
-	function createOrder() {
+	async function createOrder() {
 			// replace this url with your server
-			return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/create-order", {
+			try {
+				const results = await fetch("http://localhost:4000/donation/donate", {
 					method: "POST",
 					headers: {
 							"Content-Type": "application/json",
@@ -20,33 +21,81 @@ function Donate() {
 					body: JSON.stringify({
 							cart: [
 									{
-											sku: "etanod01",
-											quantity: 2,
+										sku: "etanod01",
+                    quantity: 1,
 									},
 							],
+							"intent": "capture"
 					}),
 			})
-					.then((response) => response.json())
-					.then((order) => {
-							// Your code here after create the order
-							return order.id;
-					});
+			const response = await results.json();
+			console.log(response);
+			const {id} = response;
+			// console.log(order);
+			return id;
+		} catch (error) {
+			console.log(error);
+		}
+
+
+			// return fetch("http://localhost:4000/donation/donate", {
+			// 		method: "POST",
+			// 		headers: {
+			// 				"Content-Type": "application/json",
+			// 		},
+			// 		// use the "body" param to optionally pass additional order information
+			// 		// like product ids and quantities
+			// 		body: JSON.stringify({
+			// 				cart: [
+			// 						{
+											
+			// 						},
+			// 				],
+			// 				"intent": "capture"
+			// 		}),
+			// })
+			// 		.then((response) => response.json())
+			// 		.then((order) => {
+			// 				// Your code here after create the order
+			// 				console.log(order);
+			// 				return order.id;
+			// 		});
 	}
-	function onApprove(data) {
+	async function onApprove(data) {
+		try {
+			console.log(data);
+			const response = await fetch("http://localhost:4000/donation/complete_donate", {
+				method: "POST",
+				headers: {
+						"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+						orderID: data.orderID,
+						"intent": "capture"
+				}),
+			});
+			const results = await response.json();
+			console.log(results);
+		} catch (error) {
+			console.log(error);
+		}
+
 			// replace this url with your server
-			return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/capture-order", {
-					method: "POST",
-					headers: {
-							"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-							orderID: data.orderID,
-					}),
-			})
-					.then((response) => response.json())
-					.then((orderData) => {
-							// Your code here after capture the order
-					});
+			// return fetch("http://localhost:4000/donation/complete_donate", {
+			// 		method: "POST",
+			// 		headers: {
+			// 				"Content-Type": "application/json",
+			// 		},
+			// 		body: JSON.stringify({
+			// 				orderID: data.orderID,
+			// 				"intent": "capture"
+			// 		}),
+			// })
+			// 		.then((response) => response.json())
+			// 		.then((orderData) => {
+			// 				// Your code here after capture the order
+			// 				console.log(orderData);
+			// 		});
 	}
 
 	// Custom component to wrap the PayPalButtons and show loading spinner
@@ -70,7 +119,7 @@ function Donate() {
 
 	return (
 		<PayPalScriptProvider options={{ clientId: "AbyIxXLDlr4cgKa-KLMdsF7MJXFIf_CBasZjrtfAnCZUeoutO3Y7ZSPiYut8K33WaKWuHOnb_cUKaqMu", components: "buttons", currency: "USD" }}>
-			<button onClick={() => {}}>Donate</button>
+			<ButtonWrapper showSpinner={false} />
 		</PayPalScriptProvider>
 	);
 }
