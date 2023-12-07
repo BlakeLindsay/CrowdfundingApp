@@ -92,7 +92,7 @@ const IndividualCampaign = ({ userID, token }) => {
 
   return (
     <div className="p-5 sm:p-0">
-      <div className="flex flex-col items-center justify-center overflow-y-scroll">
+      <div className="flex flex-col items-center justify-center overflow-y">
         <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md pb-8 px-8 mb-40 md:mt-20">
           <h2 className="text-[28px] font-bold text-white mb-6 mt-5 text-center">
             {campaign.campaignName}
@@ -142,19 +142,13 @@ const IndividualCampaign = ({ userID, token }) => {
             </div>
 
             {userID === campaign.ownerID ? (
-              <div className="flex justify-center pt-3">
+              <div className="flex justify-center space-x-4 pt-3">
                 <button
                   className="bg-red-500 text-white font-medium py-2 px-4 rounded-md hover:bg-red-600 transition ease-in duration-200"
                   onClick={handleDeleteCampaign}
                 >
                   Delete Campaign
-                </button>
-              </div>
-            ) : null}
-
-            {userID === campaign.ownerID ? (
-              <div className="flex justify-center pt-3">
-                <button
+                </button> <button
                   className="bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 transition ease-in duration-200"
                   onClick={handleEditCampaign}
                 >

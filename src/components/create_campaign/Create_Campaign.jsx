@@ -113,8 +113,8 @@ const CreateCampaign = ({ token }) => {
 
   return (
     <div className="p-5 sm:p-0 ">
-      <div className="flex flex-col items-center justify-center overflow-y-scroll">
-        <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 md:mt-40">
+      <div className="flex flex-col items-center justify-center overflow-y">
+        <div className="w-full max-w-md bg-cyan-900 rounded-xl shadow-md py-8 px-8 md:mt-32">
           <h2 className="text-[28px] font-bold text-white mb-6 text-center">
             Create a New Campaign
           </h2>

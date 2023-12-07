@@ -9,8 +9,8 @@ const Landing = ({ token }) => {
 
   return (
     <div className="p-5 sm:p-0 ">
-      <div className="flex flex-col items-center justify-center h-screen ">
-        <div className="w-full py-0 px-8 mb-40 sm:mt-16 md:mt-40 overflow-y-scroll">
+      <div className="flex flex-col items-center justify-center md:mt-10">
+        <div className="w-full px-8 mb-40 mt-10 overflow-y">
           <h2 className="text-[27px] md:text-[36px] font-bold  font-serif text-cyan-900 mb-6 text-center">
             Make A Difference In Someone's World
           </h2>
