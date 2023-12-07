@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {
 	PayPalScriptProvider,
 	PayPalButtons,
@@ -8,118 +9,93 @@ import {
 const style = {"layout":"vertical"};
 
 function Donate() {
-	async function createOrder() {
-			// replace this url with your server
-			try {
-				const results = await fetch("http://localhost:4000/donation/donate", {
-					method: "POST",
-					headers: {
-							"Content-Type": "application/json",
-					},
-					// use the "body" param to optionally pass additional order information
-					// like product ids and quantities
-					body: JSON.stringify({
-							cart: [
-									{
-										sku: "etanod01",
-                    quantity: 1,
-									},
-							],
-							"intent": "capture"
-					}),
-			})
-			const response = await results.json();
-			console.log(response);
-			const {id} = response;
-			// console.log(order);
-			return id;
-		} catch (error) {
-			console.log(error);
-		}
+	const [paidFor, setPaidFor] = useState(false);
+	const [error, setError] = useState(null);
 
+	const handleApprove = (orderID) => {
+		// Call backend function to fulfill order
 
-			// return fetch("http://localhost:4000/donation/donate", {
-			// 		method: "POST",
-			// 		headers: {
-			// 				"Content-Type": "application/json",
-			// 		},
-			// 		// use the "body" param to optionally pass additional order information
-			// 		// like product ids and quantities
-			// 		body: JSON.stringify({
-			// 				cart: [
-			// 						{
-											
-			// 						},
-			// 				],
-			// 				"intent": "capture"
-			// 		}),
-			// })
-			// 		.then((response) => response.json())
-			// 		.then((order) => {
-			// 				// Your code here after create the order
-			// 				console.log(order);
-			// 				return order.id;
-			// 		});
-	}
-	async function onApprove(data) {
-		try {
-			console.log(data);
-			const response = await fetch("http://localhost:4000/donation/complete_donate", {
-				method: "POST",
-				headers: {
-						"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-						orderID: data.orderID,
-						"intent": "capture"
-				}),
-			});
-			const results = await response.json();
-			console.log(results);
-		} catch (error) {
-			console.log(error);
-		}
+		// if response is successful
+		setPaidFor(true);
+		// refresh user's account or subscription status
 
-			// replace this url with your server
-			// return fetch("http://localhost:4000/donation/complete_donate", {
-			// 		method: "POST",
-			// 		headers: {
-			// 				"Content-Type": "application/json",
-			// 		},
-			// 		body: JSON.stringify({
-			// 				orderID: data.orderID,
-			// 				"intent": "capture"
-			// 		}),
-			// })
-			// 		.then((response) => response.json())
-			// 		.then((orderData) => {
-			// 				// Your code here after capture the order
-			// 				console.log(orderData);
-			// 		});
+		// if the response returns an error
+		setError('approval error');
 	}
 
-	// Custom component to wrap the PayPalButtons and show loading spinner
-	const ButtonWrapper = ({ showSpinner }) => {
-			const [{ isPending }] = usePayPalScriptReducer();
+	if (paidFor) {
+		alert('payment success');
+	}
 
-			return (
-					<>
-							{ (showSpinner && isPending) && <div className="spinner" /> }
-							<PayPalButtons
-									fundingSource="paypal"
-									style={{"layout":"vertical","label":"donate"}}
-									disabled={false}
-									forceReRender={[style]}
-									createOrder={createOrder}
-									onApprove={onApprove}
-							/>
-					</>
-			);
+	if (error) {
+		alert(error);
 	}
 
 	return (
 		<PayPalScriptProvider options={{ clientId: "AbyIxXLDlr4cgKa-KLMdsF7MJXFIf_CBasZjrtfAnCZUeoutO3Y7ZSPiYut8K33WaKWuHOnb_cUKaqMu", components: "buttons", currency: "USD" }}>
-			<ButtonWrapper showSpinner={false} />
+			{/* <ButtonWrapper showSpinner={false} /> */}
+			<PayPalButtons
+			fundingSource="paypal"
+									style={{"layout":"vertical","label":"donate"}}
+									disabled={false}
+									forceReRender={[style]}
+									createOrder={(data, actions) => {
+										// return fetch()
+										return actions.order.create({
+											purchase_units: [{
+												amount: {
+													breakdown: {
+														item_total: {
+															currency_code: 'USD',
+															value: '10.00'
+														}
+													},
+													currency_code: 'USD',
+													value: '10.00'
+												},
+												items: [{
+													category: 'DONATION',
+													name: 'test1',
+													quantity: '1',
+													unit_amount: {
+														currency_code: 'USD',
+														value: '10.00'
+													}
+												}]
+											}],
+											intent: 'CAPTURE'
+										})
+									}}
+									onApprove={async (data, actions) => {
+										console.log("data", data);
+										console.log('actions: ', actions);
+										const order = await actions.order.capture();
+										console.log("order: ", order);
+										try {
+											const response = await fetch(`http://localhost:4000/donation/${data.paymentID}`, {
+												method: "POST",
+												headers: {
+														"Content-Type": "application/json",
+												}
+												// body: JSON.stringify({
+												// 	facilitatorToken: data.facilitatorAccessToken
+												// })
+											});
+											console.log(response);
+											const results = await response.json();
+											console.log(results);
+										} catch (error) {
+											console.log(error);
+										}
+									}}
+									onCancel={() => {
+										// display cancel message, modal, or redirect user
+									}}
+									onError={(err) => {
+										setError(err);
+										console.error('paypal checkout onError', err);
+									}}
+							/>
 		</PayPalScriptProvider>
 	);
 }
