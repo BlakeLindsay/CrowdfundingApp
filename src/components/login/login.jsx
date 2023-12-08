@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-  function Login(props) {
+  function Login({setToken}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
           console.log("Login successful");
           console.log("Token:", results.token);
 					console.log("userID:", results.user._id);
-          props.setToken(results.token, results.user._id);
+          setToken(results.token, results.user._id);
           navigate("/"); // Navigate to homepage
         } else {
           console.log("Login failed");

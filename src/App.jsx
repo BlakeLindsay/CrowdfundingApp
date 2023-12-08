@@ -10,6 +10,8 @@ import CreateCampaign from './components/create_campaign/Create_Campaign';
 import IndividualCampaign from './components/individual_campaign/Individual_Campaign';
 import Donate from './components/donate/Donate';
 import Browser from './components/browser/Browser';
+import UpdateCampaign from './components/update/Update';
+
 
 
 function App() {
@@ -19,11 +21,17 @@ function App() {
   // Initialize the isLoggedIn state as false (user is not logged in)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(initializeToken, []);
+  useEffect(() => {
+		setToken(localStorage.token);
+		setUserID(localStorage.userID);
+	console.log("TOKEN:", token);
+    
+    console.log("UserId:", userID)}, 
+	 []);
 
   function initializeToken() {
     const storedToken = localStorage.token;
-    console.log("TOKEN:", storedToken);
+   
 
     if (storedToken) {
       setToken(storedToken);
@@ -49,6 +57,7 @@ function App() {
     // Set the isLoggedIn state to false when the user logs out
     setIsLoggedIn(false);
   }
+
   return (
     <BrowserRouter>
       <Navbar token={token} clearToken={clearToken} />
@@ -61,6 +70,7 @@ function App() {
       <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
 			<Route path="/donate" element={<Donate />} />
       <Route path="/browser" element={<Browser />} />
+      <Route path="/update/:campaignId" element={<UpdateCampaign token={token} />} />
       </Routes>
     </BrowserRouter>
   );
