@@ -68,7 +68,6 @@ function App() {
       <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
       <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
-			<Route path="/donate" element={<Donate />} />
       <Route path="/browser" element={<Browser />} />
       <Route path="/update/:campaignId" element={<UpdateCampaign token={token} />} />
       <Route path="/donate" element={<Donate userID={userID} />} />
