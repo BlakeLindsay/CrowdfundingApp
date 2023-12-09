@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useNavigate } from "react-router-dom";
 
 function Message({ content }) {
 	return <p>{content}</p>
@@ -7,6 +8,7 @@ function Message({ content }) {
 
 export function DonateButton({ amount }) {
   const [message, setMessage] = useState("");
+	const navigate = useNavigate();
 
   return (
     <>
@@ -25,7 +27,7 @@ export function DonateButton({ amount }) {
               // like product ids and quantities
               body: JSON.stringify({
                 amount,
-								
+
               }),
             });
 
@@ -79,8 +81,10 @@ export function DonateButton({ amount }) {
             } else {
               // (3) Successful transaction -> Show confirmation or thank you message
               // Or go to another URL:  actions.redirect('thank_you.html');
+							console.log(orderData);
               const transaction =
-                orderData.purchase_units[0].payments.captures[0];
+                orderData.links[1].href;
+							// actions.redirect(transaction);
               setMessage(
                 `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
               );
