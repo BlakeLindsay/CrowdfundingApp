@@ -6,6 +6,7 @@ function Profile({ token, userID }) {
   const [imageURL, setImageURL] = useState("");
 	const [isAdmin, setIsAdmin] = useState(false);
   const [campaignName, setCampaignName] = useState("");
+	const [deleteUsername, setDeleteUsername] = useState("");
 	
 
 	useEffect(() => {
@@ -50,32 +51,38 @@ function Profile({ token, userID }) {
     initProfile();
   }
 
-	// const handleDeleteUser = async (e) => {
-	// 	e.preventDefault();
-	// 	try {
-	// 		const response = await fetch(`/api/user/delete/${owner}`, {
-	// 			method: 'DELETE',
-	// 			headers: {
-	// 				Authorization: token, // Include the user's token for authentication
-	// 			},
-	// 		});
+	const handleDeleteUser = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(`http://localhost:4000/user/deletebyname/${deleteUsername}`, {
+				method: 'DELETE',
+				headers: {
+					Authorization: token, // Include the user's token for authentication
+				},
+			});
+
+			const results = await response.json();
+			console.log(results);
 	
-	// 		if (response.ok) {
-	// 			// Handle success (e.g., show a success message)
-	// 		} else {
-	// 			// Handle errors (e.g., show an error message)
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error:', error);
-	// 		// Handle errors (e.g., show an error message)
-	// 	}
-	// };
+			if (response.ok) {
+				// Handle success (e.g., show a success message)
+				alert("successfully deleted user");
+			} else {
+				// Handle errors (e.g., show an error message)
+				alert("did not delete user");
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			// Handle errors (e.g., show an error message)
+		}
+	};
 
   const handleDeleteCampaign = async (e) => {
     e.preventDefault();
     try {
+			console.log(campaignName);
 			const response = await fetch(
-				`http://localhost:4000/campaign/delete/${campaignName}`,
+				`http://localhost:4000/campaign/deletebyname/${campaignName}`,
 				{
 					method: "DELETE",
 					headers: {
@@ -135,7 +142,7 @@ function Profile({ token, userID }) {
             </form>
 						{isAdmin && (
               <div>
-                {/* <form onSubmit={handleDeleteUser} className="mb-4">
+                <form onSubmit={handleDeleteUser} className="mb-4">
                   <label className="block text-white text-sm font-bold mb-2">
                     Enter Username to Delete User:
                   </label>
@@ -151,7 +158,7 @@ function Profile({ token, userID }) {
                   >
                     Delete User
                   </button>
-                </form> */}
+                </form>
 
                 <form onSubmit={handleDeleteCampaign}>
                   <label className="block text-white text-sm font-bold mb-2">
