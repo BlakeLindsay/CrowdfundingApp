@@ -15,19 +15,27 @@ import UpdateCampaign from './components/update/Update';
 
 
 function App() {
-  const [token, setToken] = useState("");
-	const [userID, setUserID] = useState("");
+  // const [token, setToken] = useState("");
+	// const [userID, setUserID] = useState("");
 
   // Initialize the isLoggedIn state as false (user is not logged in)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [token, setToken] = useState(localStorage.token || "");
+  const [userID, setUserID] = useState(localStorage.userID || "");
+  const [isAdmin, setIsAdmin] = useState(localStorage.isAdmin || "");
+  
   useEffect(() => {
-		setToken(localStorage.token);
-		setUserID(localStorage.userID);
-	console.log("TOKEN:", token);
+    console.log("TOKEN:", token);
+    console.log("UserId:", userID);
+    console.log("isAdmin:", isAdmin);
+  }, [token, userID, isAdmin]);
+  // useEffect(() => {
+	// 	setToken(localStorage.token);
+	// 	setUserID(localStorage.userID);
+	// console.log("TOKEN:", token);
     
-    console.log("UserId:", userID)}, 
-	 []);
+  //   console.log("UserId:", userID)}, 
+	//  []);
 
   function initializeToken() {
     const storedToken = localStorage.token;
@@ -40,11 +48,13 @@ function App() {
     }
   }
 
-  function updateToken(newToken, newUserID) {
+  function updateToken(newToken, newUserID, newIsAdmin) {
     setToken(newToken);
     localStorage.token = newToken;
 		setUserID(newUserID);
 		localStorage.userID = newUserID;
+    setIsAdmin(newIsAdmin);
+		localStorage.isAdmin = newIsAdmin;
 
     // Set the isLoggedIn state to true when a token is updated (user is logged in)
     setIsLoggedIn(true);
@@ -65,7 +75,7 @@ function App() {
       <Route path="/" element={<Landing token={token} clearToken={clearToken} />} />
       <Route path="/signup" element={<Signup setToken={updateToken} />} />
       <Route path="/login" element={<Login setToken={updateToken} />} />
-      <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
+      <Route path="/profile" element={<Profile setToken={updateToken} token={token} userID={userID} isAdmin={isAdmin}/>} />
       <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
       <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
       <Route path="/browser" element={<Browser />} />
