@@ -1,12 +1,99 @@
-import React, { useState, useEffect } from "react";
+import React, {   useState, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 function Profile({ token, userID }) {
   const [imageFile, setImageFile] = useState("");
   const [imageURL, setImageURL] = useState("");
+	const [isAdmin, setIsAdmin] = useState(false);
+  const [campaignName, setCampaignName] = useState("");
+	
+
+	useEffect(() => {
+		const fetchAdminStatus = async () => {
+			try {
+				console.log('UserID:', userID);
+				console.log('isAdmin:', isAdmin);
+				// Check if userID is a valid ObjectId
+				const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(userID);
+	
+				if (isValidObjectId) {
+					const response = await fetch(
+						`http://localhost:4000/user/adminStatus/${userID}`,
+						{
+							headers: new Headers({
+								"Content-Type": "application/json",
+								Authorization: token,
+							}),
+							method: "GET",
+						}
+					);
+	
+					if (response.status === 200) {
+						const data = await response.json();
+						setIsAdmin(data.isAdmin);
+					} else {
+						console.error("Failed to fetch admin status");
+					}
+				} else {
+					console.error("Invalid userID format");
+				}
+			} catch (error) {
+				console.error("Error fetching admin status:", error);
+			}
+		};
+	
+		// Fetch admin status when the component mounts
+		fetchAdminStatus();
+	}, [userID, token]);
 
   if (token) {
     initProfile();
   }
+
+	// const handleDeleteUser = async (e) => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		const response = await fetch(`/api/user/delete/${owner}`, {
+	// 			method: 'DELETE',
+	// 			headers: {
+	// 				Authorization: token, // Include the user's token for authentication
+	// 			},
+	// 		});
+	
+	// 		if (response.ok) {
+	// 			// Handle success (e.g., show a success message)
+	// 		} else {
+	// 			// Handle errors (e.g., show an error message)
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error:', error);
+	// 		// Handle errors (e.g., show an error message)
+	// 	}
+	// };
+
+  const handleDeleteCampaign = async (e) => {
+    e.preventDefault();
+    try {
+			const response = await fetch(
+				`http://localhost:4000/campaign/delete/${campaignName}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: token,
+					},
+				}
+			);
+
+      if (response.status === 200) {
+        console.log("Campaign deleted successfully");
+      } else {
+        console.log("Failed to delete campaign");
+      }
+    } catch (error) {
+      console.error("Error deleting campaign:", error);
+    }
+  };
 
   return (
     <div className="p-5 sm:p-0">
@@ -46,6 +133,45 @@ function Profile({ token, userID }) {
                 Submit Photo
               </button></div>
             </form>
+						{isAdmin && (
+              <div>
+                {/* <form onSubmit={handleDeleteUser} className="mb-4">
+                  <label className="block text-white text-sm font-bold mb-2">
+                    Enter Username to Delete User:
+                  </label>
+                  <input
+                    type="text"
+                    value={deleteUsername}
+                    onChange={(e) => setDeleteUsername(e.target.value)}
+                    className="bg-gray-200 rounded-full px-4 py-2 w-full"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-red-500 text-white font-medium py-2 px-4 rounded-md hover:bg-red-600 transition ease-in duration-200 mt-2"
+                  >
+                    Delete User
+                  </button>
+                </form> */}
+
+                <form onSubmit={handleDeleteCampaign}>
+                  <label className="block text-white text-sm font-bold mb-2">
+                    Enter Campaign Name to Delete:
+                  </label>
+                  <input
+                    type="text"
+                    value={campaignName}
+                    onChange={(e) => setCampaignName(e.target.value)}
+                    className="bg-gray-200 rounded-full px-4 py-2 w-full"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-red-500 text-white font-medium py-2 px-4 rounded-md hover:bg-red-600 transition ease-in duration-200 mt-2"
+                  >
+                    Delete Campaign
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </div>
