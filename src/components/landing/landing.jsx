@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import "./landing.css";
+import { useNavigate } from "react-router-dom";
 
 const Landing = ({ token }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     // Log the token whenever it changes
     console.log("Token value:", token);
@@ -59,12 +61,14 @@ const Landing = ({ token }) => {
             </h2>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <button
-              className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300"
-              type="submit"
-            >
-              Explore
-            </button>
+						<a href="/browser">
+							<button
+								className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300"
+								type="button"
+							>
+								Explore
+							</button>
+						</a>
           </div>
           <br />
           <div className="flex flex-col items-center justify-center">

@@ -9,17 +9,18 @@ const Browser = () => {
   const [loading, setLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch all campaigns when the component mounts
     fetchAllCampaigns();
   }, []);
 
-  const fetchAllCampaigns = async () => {
+  async function fetchAllCampaigns() {
     try {
       setLoading(true);
 
-      const response = await fetch(`http://localhost:4000/campaign/list`, {
+      const response = await fetch(`http://localhost:4000/campaign/getall`, {
         headers: {
           "Content-Type": "application/json",
           // You can include additional headers like 'Authorization' if needed
@@ -66,7 +67,28 @@ const Browser = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
+
+		searchCategory(category);
   };
+
+	async function searchCategory(category) {
+		const response = await fetch(`http://localhost:4000/campaign/search/category/${category}`, {
+			headers: {
+				"Content-Type": "application/json",
+				// You can include additional headers like 'Authorization' if needed
+			},
+			method: "GET",
+		});
+
+		const results = await response.json();
+		setFilteredCards(results.campaigns);
+	};
+
+	function handleNavigate(card) {
+		navigate('/campaign', {
+			state: { campaignId: card._id }
+		})
+	}
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -248,7 +270,9 @@ const Browser = () => {
                   )}
                 </p>
                 {/* Additional card details can be added here */}
-                <button className="bg-blue-500 text-white p-2 rounded">
+                <button className="bg-blue-500 text-white p-2 rounded"
+								onClick={() => handleNavigate(card)}
+								>
                   View Details
                 </button>
               </div>

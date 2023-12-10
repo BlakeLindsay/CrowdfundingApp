@@ -136,7 +136,7 @@ const IndividualCampaign = ({ userID, token }) => {
               <button
                 className="bg-teal-400 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-600 transition ease-in duration-200"
                 type="submit"
-								onClick={navigate('/donate', {
+								onClick={() => navigate('/donate', {
 									state: { campaignId }
 								})}
               >

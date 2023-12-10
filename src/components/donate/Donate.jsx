@@ -7,6 +7,7 @@ function Donate({userID}) {
 	const [donationName, setDonationName] = useState("");
 	const location = useLocation();
   const { campaignId } = location.state;
+	const navigate = useNavigate();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -26,6 +27,10 @@ function Donate({userID}) {
 			});
 			const results = await response.json();
 			console.log(results);
+
+			if (response.status === 200) {
+				navigate("/campaign", { state: { campaignId }});
+			}
 		} catch (error) {
 			console.log(error);
 		}
