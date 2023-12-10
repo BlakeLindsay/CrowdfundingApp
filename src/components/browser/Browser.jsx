@@ -72,16 +72,20 @@ const Browser = () => {
   };
 
 	async function searchCategory(category) {
-		const response = await fetch(`http://localhost:4000/campaign/search/category/${category}`, {
-			headers: {
-				"Content-Type": "application/json",
-				// You can include additional headers like 'Authorization' if needed
-			},
-			method: "GET",
-		});
+		try {
+			const response = await fetch(`http://localhost:4000/campaign/search/category/${category}`, {
+				headers: {
+					"Content-Type": "application/json",
+					// You can include additional headers like 'Authorization' if needed
+				},
+				method: "GET",
+			});
 
-		const results = await response.json();
-		setFilteredCards(results.campaigns);
+			const results = await response.json();
+			setFilteredCards(results.campaigns);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	function handleNavigate(card) {
