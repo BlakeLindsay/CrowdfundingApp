@@ -31,7 +31,7 @@ function App() {
 
   function initializeToken() {
     const storedToken = localStorage.token;
-   
+    console.log("TOKEN:", storedToken);
 
     if (storedToken) {
       setToken(storedToken);
@@ -57,8 +57,8 @@ function App() {
     // Set the isLoggedIn state to false when the user logs out
     setIsLoggedIn(false);
   }
-
   return (
+		<>
     <BrowserRouter>
       <Navbar token={token} clearToken={clearToken} />
       <Routes>
@@ -68,11 +68,12 @@ function App() {
       <Route path="/profile" element={<Profile token={token} userID={userID}/>} />
       <Route path="/create" element={<CreateCampaign setToken={updateToken} token={token} />} />
       <Route path="/campaign" element={<IndividualCampaign token={token} userID={userID}/>} />
-			<Route path="/donate" element={<Donate />} />
       <Route path="/browser" element={<Browser />} />
       <Route path="/update/:campaignId" element={<UpdateCampaign token={token} />} />
+      <Route path="/donate" element={<Donate userID={userID} />} />
       </Routes>
     </BrowserRouter>
+		</>
   );
 }
 
