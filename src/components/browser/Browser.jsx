@@ -144,7 +144,7 @@ const Browser = () => {
                   <li>
                     <button
                       type="button"
-                      onClick={() => handleCategoryChange("All categories")}
+                      onClick={() => fetchAllCampaigns()}
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       All categories
