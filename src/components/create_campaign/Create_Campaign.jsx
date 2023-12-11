@@ -201,32 +201,49 @@ const CreateCampaign = ({ token }) => {
                 onChange={(e) => setDetailDesc(e.target.value)}
               />
             </div>
-            
             <div className="mb-4">
               <label
-                className="block text-white text-sm font-bold mb-2"
+                className="block text-white text-sm font-bold mb-0"
                 htmlFor="pic"
               >
                 Upload Photo
               </label>
-              <input
-                type="file"
-                id="pic"
-                onChange={(e) => {
-                  setImageFile(e.target.files[0]);
-                  setSelectedImage(URL.createObjectURL(e.target.files[0]));
-                }}
-                className="w-full bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2 mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900"
-              />
-              {selectedImage && (
-                <img
-                  src={selectedImage}
-                  alt="Selected"
-                  className="max-w-full h-auto mb-4"
-                />
-              )}
-            </div>
 
+            <div className="bg-teal-50 text-cyan-900 font-bold border-0 rounded-md p-2 mt-4 mb-4 focus:bg-teal-100 focus:outline-none transition ease-in-out duration-150 placeholder-cyan-900">
+                {selectedImage && (
+                  <img
+                    src={selectedImage}
+                    alt="Selected"
+                    className="max-w-full h-auto mb-4"
+                  />
+                )}
+                <div className="flex items-center justify-center overflow-y">
+                  <label className="relative cursor-pointer bg-teal-700 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-500 transition ease-in duration-200">
+                    {imageFile
+                      ? "File Chosen: " + imageFile.name
+                      : "Choose a file"}
+                    <input
+                      name="file"
+                      type="file"
+                      onChange={(e) => {
+                        setImageFile(e.target.files[0]);
+                        setSelectedImage(
+                          URL.createObjectURL(e.target.files[0])
+                        );
+                      }}
+                      className="sr-only"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    className="bg-cyan-600  text-white font-medium py-2 px-4 rounded-md hover:bg-cyan-700 transition ease-in duration-200 ml-12"
+                  >
+                    Upload Photo
+                  </button>
+                </div>
+              </div>
+              </div>
+            
             <button
               className="bg-teal-500 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-600 transition ease-in duration-200"
               type="submit"
