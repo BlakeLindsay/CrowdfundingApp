@@ -71,21 +71,24 @@ const Browser = () => {
     searchCategory(category);
   };
 
-  async function searchCategory(category) {
-    const response = await fetch(
-      `http://localhost:4000/campaign/search/category/${category}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          // You can include additional headers like 'Authorization' if needed
-        },
-        method: "GET",
-      }
-    );
 
-    const results = await response.json();
-    setFilteredCards(results.campaigns);
-  }
+	async function searchCategory(category) {
+		try {
+			const response = await fetch(`http://localhost:4000/campaign/search/category/${category}`, {
+				headers: {
+					"Content-Type": "application/json",
+					// You can include additional headers like 'Authorization' if needed
+				},
+				method: "GET",
+			});
+
+			const results = await response.json();
+			setFilteredCards(results.campaigns);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 
   function handleNavigate(card) {
     navigate("/campaign", {
@@ -149,7 +152,7 @@ const Browser = () => {
                   <li>
                     <button
                       type="button"
-                      onClick={() => handleCategoryChange("All categories")}
+                      onClick={() => fetchAllCampaigns()}
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       All categories
