@@ -8,7 +8,7 @@ const Browser = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All categories");
+  const [selectedCategory, setSelectedCategory] = useState("Categories");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Browser = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleTypeChange = (e) => {
     const newCampaignType = e.target.value;
@@ -68,8 +68,9 @@ const Browser = () => {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
 
-		searchCategory(category);
+    searchCategory(category);
   };
+
 
 	async function searchCategory(category) {
 		try {
@@ -88,58 +89,61 @@ const Browser = () => {
 		}
 	};
 
-	function handleNavigate(card) {
-		navigate('/campaign', {
-			state: { campaignId: card._id }
-		})
-	}
+
+  function handleNavigate(card) {
+    navigate("/campaign", {
+      state: { campaignId: card._id },
+    });
+  }
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <div className="w-full sm:w-[50%]">
-          <form>
+          <form className="pt-10 pb-10 pl-4 pr-5">
             <div className="flex">
-              <label
-                htmlFor="search-dropdown"
-                className="mb-2 text-sm font-medium text-cyan-900 sr-only dark:text-white"
-              >
-                Select a category:
-              </label>
-
-              {/* Dropdown Button */}
-              <button
-                id="dropdown-button"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex-shrink-0 z-10 inline-flex items-center py-2.5 pr-1 pl-2 text-sm font-medium text-center text-white bg-cyan-800 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-cyan-700 dark:bg-cyan-1000 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900 dark:text-white dark:border-cyan-900"
-                type="button"
-              >
-                {selectedCategory}
-                <svg
-                  className={`w-2.5 h-2.5 ms-2.5 transition-transform overflow-y ${
-                    isDropdownOpen ? "transform rotate-180" : ""
-                  }`}
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
+              <div>
+                <label
+                  htmlFor="search-dropdown"
+                  className="mb-2 text-sm font-medium text-cyan-900 sr-only dark:text-white"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-
+                  Select a category:
+                </label>
+              </div>
+              <div>
+                {/* Dropdown Button */}
+                <button
+                  id="dropdown-button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex-shrink-0 h-11 z-10 inline-flex items-center py-2.5 pr-1 pl-2 text-sm font-medium text-center text-white bg-cyan-800 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-cyan-700 dark:bg-cyan-1000 dark:hover:bg-cyan-700 dark:focus:ring-cyan-900 dark:text-white dark:border-cyan-900"
+                  type="button"
+                >
+                  {selectedCategory}
+                  <svg
+                    className={`w-2.5 h-2.5 ms-2.5 transition-transform overflow-y ${
+                      isDropdownOpen ? "transform rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+              </div>
               {/* Dropdown List */}
               <div
                 id="dropdown"
                 className={`${
-                  isDropdownOpen ? "block" : "hidden"
-                } z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 overflow-y-auto`}
+                  isDropdownOpen ? "block absolute" : "hidden"
+                } z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -194,7 +198,9 @@ const Browser = () => {
                   <li>
                     <button
                       type="button"
-                      onClick={() => handleCategoryChange("Financial Emergency")}
+                      onClick={() =>
+                        handleCategoryChange("Financial Emergency")
+                      }
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-cyan-700  dark:hover:text-white"
                     >
                       Financial Emergency
@@ -215,31 +221,33 @@ const Browser = () => {
                 <input
                   type="search"
                   id="search-dropdown"
-                  className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-cyan-900 rounded-e-lg border-s-gray-50 border-s-2 border border-cyan-900 focus:ring-cyan-600 focus:border-cyan-600 dark:bg-cyan-1000 dark:border-s-gray-700 dark:border-cyan-900 dark:placeholder-gray-400 dark:text-white dark:focus:border-cyan-900"
+                  className="block p-2.5 w-full z-20 text-sm text-gray-900 h-11 bg-cyan-900 rounded-e-lg border-s-gray-50 border-s-2 border border-cyan-900 focus:ring-cyan-600 focus:border-cyan-600 dark:bg-cyan-1000 dark:border-s-gray-700 dark:border-cyan-900 dark:placeholder-gray-400 dark:text-white dark:focus:border-cyan-900"
                   placeholder="Search Campaigns..."
                   required
                 />
-                <button
-                  type="submit"
-                  className="absolute top-0 end-0 p-2 text-sm font-medium h-full text-white bg-cyan-900 rounded-e-lg border border-cyan-900 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-cyan-600"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
+                <div>
+                  <button
+                    type="submit"
+                    className="absolute top-0 end-0 p-2 text-sm font-medium h-11 text-white bg-cyan-900 rounded-e-lg border border-cyan-900 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-cyan-600"
                   >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                  <span className="sr-only">Search</span>
-                </button>
+                    <svg
+                      className="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                    <span className="sr-only">Search</span>
+                  </button>
+                </div>
               </div>
             </div>
           </form>
@@ -248,7 +256,7 @@ const Browser = () => {
         {/* Card List */}
         <div
           id="cardList"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 autoflow-y"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 autoflow-y pl-5 pr-5"
         >
           {/* Mapping over filtered cards and rendering each card */}
           {loading && <p>Loading...</p>}
@@ -256,29 +264,34 @@ const Browser = () => {
             filteredCards.map((card) => (
               <div
                 key={card._id}
-                className="bg-white p-4 border border-gray-300 rounded"
+                className="bg-cyan-900 p-4 text-white rounded"
               >
                 <h2 className="text-xl font-semibold mb-2">
                   {card.campaignName}
                 </h2>
-                <p className="text-gray-700 mb-4">
+                <p className="text-white mb-4">
                   <strong>Fundraising Goal:</strong> ${card.fundGoal}
                 </p>
+                <div className="flex justify-center">
                 <p>
                   {card.campaignImageLink && (
                     <img
-                      className="pt-2"
+                      className="rounded-lg h-72 w-auto"
                       src={card.campaignImageLink}
                       alt="Campaign"
                     />
                   )}
                 </p>
+                </div>
                 {/* Additional card details can be added here */}
-                <button className="bg-blue-500 text-white p-2 rounded"
-								onClick={() => handleNavigate(card)}
-								>
-                  View Details
-                </button>
+                <div className="flex justify-center pt-5">
+                  <button
+                    className="bg-teal-500 text-white font-medium py-2 px-4 rounded-md hover:bg-teal-600 transition ease-in duration-200"
+                    onClick={() => handleNavigate(card)}
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
             ))}
         </div>
