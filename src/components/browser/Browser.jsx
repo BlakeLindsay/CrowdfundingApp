@@ -189,10 +189,10 @@ const Browser = () => {
                   <li>
                     <button
                       type="button"
-                      onClick={() => handleCategoryChange("Non-Profit")}
+                      onClick={() => handleCategoryChange("Non-profit")}
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-cyan-700  dark:hover:text-white"
                     >
-                      Non-Profit
+                      Non-profit
                     </button>
                   </li>
                   <li>

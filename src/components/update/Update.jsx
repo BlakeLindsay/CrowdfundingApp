@@ -195,7 +195,7 @@ const UpdateCampaign = ({ token }) => {
                 <option value="Medical">Medical</option>
                 <option value="Memorial">Memorial</option>
                 <option value="Emergency">Emergency</option>
-                <option value="Nonprofit">Nonprofit</option>
+                <option value="Non-profit">Nonprofit</option>
                 <option value="Financial Emergency">Financial Emergency</option>
                 <option value="Animals">Animals</option>
               </select>
