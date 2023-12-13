@@ -137,7 +137,7 @@ function Profile({ token, userID }) {
                 type="submit"
                 className="bg-cyan-600 mt-4 text-white font-medium py-2 px-4 rounded-md hover:bg-cyan-700 transition ease-in duration-200"
               >
-                Submit Photo
+                Save Photo
               </button></div>
             </form>
 						{isAdmin && (

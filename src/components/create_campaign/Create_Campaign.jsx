@@ -238,7 +238,7 @@ const CreateCampaign = ({ token }) => {
                     type="button"
                     className="bg-cyan-600  text-white font-medium py-2 px-4 rounded-md hover:bg-cyan-700 transition ease-in duration-200 ml-12"
                   >
-                    Upload Photo
+                    Save Photo
                   </button>
                 </div>
               </div>
