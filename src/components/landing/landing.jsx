@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import "./landing.css";
+import { useNavigate } from "react-router-dom";
 
 const Landing = ({ token }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     // Log the token whenever it changes
     console.log("Token value:", token);
   }, [token]); // Re-run the effect whenever the token changes
 
   return (
-    <div className="p-5 sm:p-0">
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full py-0 px-8 mb-40 sm:mt-16 md:mt-40">
+    <div className="p-5 sm:p-0 ">
+      <div className="flex flex-col items-center justify-center md:mt-10">
+        <div className="w-full px-8 mb-40 mt-10 overflow-y">
           <h2 className="text-[27px] md:text-[36px] font-bold  font-serif text-cyan-900 mb-6 text-center">
             Make A Difference In Someone's World
           </h2>
@@ -59,12 +61,14 @@ const Landing = ({ token }) => {
             </h2>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <button
-              className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300"
-              type="submit"
-            >
-              Explore
-            </button>
+						<a href="/browser">
+							<button
+								className="btn2 text-white font-bold border-cyan-900 border-2 md:block hover:-translate-y-1 hover:scale-110 hover:bg-cyan-950 hover:text-teal-50 duration-300"
+								type="button"
+							>
+								Explore
+							</button>
+						</a>
           </div>
           <br />
           <div className="flex flex-col items-center justify-center">
